@@ -11,6 +11,9 @@
 		483B61CC2C0799F3002A5F70 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483B61CB2C0799F3002A5F70 /* ContentView.swift */; };
 		483B61CE2C0799F6002A5F70 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 483B61CD2C0799F6002A5F70 /* Assets.xcassets */; };
 		483B61D22C0799F6002A5F70 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 483B61D12C0799F6002A5F70 /* Preview Assets.xcassets */; };
+		483B61D92C079C17002A5F70 /* NetworkHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483B61D82C079C17002A5F70 /* NetworkHelper.swift */; };
+		483B61DC2C079D02002A5F70 /* NetworkProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483B61DB2C079D02002A5F70 /* NetworkProtocols.swift */; };
+		483B61DE2C07A62C002A5F70 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483B61DD2C07A62C002A5F70 /* NetworkError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +23,9 @@
 		483B61CD2C0799F6002A5F70 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		483B61CF2C0799F6002A5F70 /* Proyecto_AC.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Proyecto_AC.entitlements; sourceTree = "<group>"; };
 		483B61D12C0799F6002A5F70 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		483B61D82C079C17002A5F70 /* NetworkHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkHelper.swift; sourceTree = "<group>"; };
+		483B61DB2C079D02002A5F70 /* NetworkProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtocols.swift; sourceTree = "<group>"; };
+		483B61DD2C07A62C002A5F70 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,8 +58,11 @@
 		483B61C82C0799F3002A5F70 /* Proyecto AC */ = {
 			isa = PBXGroup;
 			children = (
+				483B61DA2C079CD1002A5F70 /* Protocolos */,
 				483B61C92C0799F3002A5F70 /* Proyecto_ACApp.swift */,
 				483B61CB2C0799F3002A5F70 /* ContentView.swift */,
+				483B61D82C079C17002A5F70 /* NetworkHelper.swift */,
+				483B61DD2C07A62C002A5F70 /* NetworkError.swift */,
 				483B61CD2C0799F6002A5F70 /* Assets.xcassets */,
 				483B61CF2C0799F6002A5F70 /* Proyecto_AC.entitlements */,
 				483B61D02C0799F6002A5F70 /* Preview Content */,
@@ -67,6 +76,14 @@
 				483B61D12C0799F6002A5F70 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		483B61DA2C079CD1002A5F70 /* Protocolos */ = {
+			isa = PBXGroup;
+			children = (
+				483B61DB2C079D02002A5F70 /* NetworkProtocols.swift */,
+			);
+			path = Protocolos;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,8 +156,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				483B61DC2C079D02002A5F70 /* NetworkProtocols.swift in Sources */,
+				483B61D92C079C17002A5F70 /* NetworkHelper.swift in Sources */,
 				483B61CC2C0799F3002A5F70 /* ContentView.swift in Sources */,
 				483B61CA2C0799F3002A5F70 /* Proyecto_ACApp.swift in Sources */,
+				483B61DE2C07A62C002A5F70 /* NetworkError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,18 +304,19 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 14.5;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "osasuSB.Proyecto-AC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -322,18 +343,19 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 14.5;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "osasuSB.Proyecto-AC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
