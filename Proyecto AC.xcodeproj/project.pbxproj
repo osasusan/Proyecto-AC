@@ -58,11 +58,11 @@
 		483B61C82C0799F3002A5F70 /* Proyecto AC */ = {
 			isa = PBXGroup;
 			children = (
+				483B61E02C0BB8B0002A5F70 /* App */,
+				483B61DF2C0BB8A1002A5F70 /* Models */,
 				483B61DA2C079CD1002A5F70 /* Protocolos */,
-				483B61C92C0799F3002A5F70 /* Proyecto_ACApp.swift */,
+				483B61E12C0BB8D6002A5F70 /* data */,
 				483B61CB2C0799F3002A5F70 /* ContentView.swift */,
-				483B61D82C079C17002A5F70 /* NetworkHelper.swift */,
-				483B61DD2C07A62C002A5F70 /* NetworkError.swift */,
 				483B61CD2C0799F6002A5F70 /* Assets.xcassets */,
 				483B61CF2C0799F6002A5F70 /* Proyecto_AC.entitlements */,
 				483B61D02C0799F6002A5F70 /* Preview Content */,
@@ -84,6 +84,30 @@
 				483B61DB2C079D02002A5F70 /* NetworkProtocols.swift */,
 			);
 			path = Protocolos;
+			sourceTree = "<group>";
+		};
+		483B61DF2C0BB8A1002A5F70 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		483B61E02C0BB8B0002A5F70 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				483B61C92C0799F3002A5F70 /* Proyecto_ACApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		483B61E12C0BB8D6002A5F70 /* data */ = {
+			isa = PBXGroup;
+			children = (
+				483B61D82C079C17002A5F70 /* NetworkHelper.swift */,
+				483B61DD2C07A62C002A5F70 /* NetworkError.swift */,
+			);
+			path = data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
