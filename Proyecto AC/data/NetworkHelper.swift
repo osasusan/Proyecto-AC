@@ -16,12 +16,13 @@ class NetworkHelper : NetworkProtocol {
         case PUT
         case DELETE
     }
+    public static let shared = NetworkHelper()
     
     private func requestApi(request : URLRequest) async throws -> (Data, URLResponse){
         return try await URLSession.shared.data(for: request)
     }
-
-    func requiesProvider (url : String ,type : RequestType ,params :[String: Any]? )async throws -> (Data,URLResponse){
+    
+    func requiesProvider(url : String ,type : RequestType ,params :[String: Any]? )async throws -> (Data,URLResponse){
         
         guard let urlNotNil = URL(string: url) else {
             throw NetworkError.networkErrorEnum.invalidUrl
