@@ -9,12 +9,16 @@ import Foundation
 
 protocol NetworkProtocol {
     
+    
  
     func requiesProvider(url: String, type: NetworkHelper.RequestType , params:[String: Any]?) async throws -> (Data, URLResponse)
-}
-extension NetworkProtocol {
-    func requiesProvider(url: String, type: NetworkHelper.RequestType, params: [String: Any]?) async throws -> (Data, URLResponse){
-        return try await requiesProvider(url: url, type: type, params: nil)
-    }
     
 }
+
+
+//extension NetworkProtocol {
+//    func requiesProvider(url: String, type: NetworkHelper.RequestType, params: [String: Any]?) async throws -> (Data, URLResponse){
+//        return try await requiesProvider(url: url, type: type, params:nil)
+//    }
+    
+//}
