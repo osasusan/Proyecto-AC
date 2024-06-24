@@ -233,17 +233,19 @@ extension MangasViewModel{
         }
     }
     //empieza por 
-    func mangaBegings(conten: String)async throws -> Item {
+    func mangaBegings(conten: String)async throws ->[Item]{
         do{
             let url = "https://mymanga-acacademy-5607149ebe3d.herokuapp.com/search/mangasBeginsWith/\(conten)"
+            
             let (data,response) = try await sareed.requiesProvider(url: url, type: .GET, params: nil)
+            
             guard let httpResponse = response as? HTTPURLResponse,httpResponse.statusCode == 200 else{
                 throw NetworkError.networkErrorEnum.badRequest
             }
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
             do{
-                let response = try decoder.decode(Item.self,from: data)
+                let response = try decoder.decode([Item].self,from: data)
                 print(response)
                 return response
             } catch{
