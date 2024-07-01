@@ -19,19 +19,19 @@ struct LoginView: View {
             Text(error)
                 .foregroundStyle(.red)
             
-//            Button{
-//                Task{
-//                    if !vm.email.isEmpty || !vm.pass.isEmpty{
-//                        await vm.logUser(user:vm.email,pass:vm.pass)
-//                    }else {
-//                       
-//                        error = "los campos estan vacions"
-//                        
-//                    }
-//                }
-//            }label:{
-//                Text("log")
-//            }
+            Button{
+                Task{
+                    if !vm.email.isEmpty || !vm.pass.isEmpty{
+                        await vm.logUser(user:vm.email,pass:vm.pass)
+                    }else {
+                       
+                        error = "los campos estan vacions"
+                        
+                    }
+                }
+            }label:{
+                Text("log")
+            }
         }
     }
 }

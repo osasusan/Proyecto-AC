@@ -14,23 +14,9 @@ struct MangaComponet: View {
     var body: some View {
         VStack(spacing:3){
             LazyVStack{
-                AsyncImage(url: URL(string: cleanUrl(manga?.mainPicture ?? "nil"))){ phase in
-                    switch phase {
-                        case .empty:
-                            ProgressView()
-                        case .success(let image):
-                            image.resizable()
-                                .clipShape(RoundedRectangle(cornerRadius: 20))
-                        case .failure:
-                            Image("Naruto")
-                                .resizable()
-                                .clipShape(RoundedRectangle(cornerRadius: 20))
-                        default:
-                            EmptyView()
-                    }
-                }
-                .scaledToFit()
-                .frame(width: 100,height: 160)
+                imageAsinc(imagen: manga?.mainPicture ?? "nil", width: 100, height: 160, radio: 20)
+                
+                
                 
                 HStack(alignment: .center){
                     VStack(alignment:.leading) {
@@ -38,6 +24,7 @@ struct MangaComponet: View {
                             .lineLimit(3)
                             .font(.footnote)
                             .fontWeight(.regular)
+                            .fontWidth(.compressed)
                         
                             .frame(height: 50,alignment: .topLeading)
                             .padding(.top,5)
@@ -66,31 +53,13 @@ struct MangaComponet: View {
 }
 
 struct MangaComponetDetalle:View{
-    
     var manga:Item?
     
     var body: some View {
         VStack(spacing:10){
             HStack(alignment: .center){
-                AsyncImage(url: URL(string: cleanUrl(manga?.mainPicture ?? "nil"))){ phase in
-                    switch phase {
-                        case .empty:
-                            ProgressView()
-                        case .success(let image):
-                            image.resizable()
-                                .scaledToFill()
-                                .frame(width: 150, height: 240)
-                                .clipShape(RoundedRectangle(cornerRadius: 20))
-                        case .failure:
-                            Image("Naruto")
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 150, height: 240)
-                                .clipShape(RoundedRectangle(cornerRadius: 20))
-                        default:
-                            EmptyView()
-                    }
-                }
+                imageAsinc(imagen: manga?.mainPicture ?? "nil", width: 150, height: 240,radio: 20)
+                
                 HStack(alignment: .bottom){
                     VStack(alignment:.leading) {
                         Text(manga?.title ?? "Error")
@@ -142,42 +111,13 @@ struct MangaDetailVeiw :View {
     var body: some View{
         ScrollView{
             VStack{
-                AsyncImage(url: URL(string: cleanUrl(manga?.mainPicture ?? "nil"))){ phase in
-                    switch phase {
-                        case .empty:
-                            ProgressView()
-                        case .success(let image):
-                            image.resizable()
-                                .scaledToFill()
-                                .frame(width: 390, height: 600)
-//                                .clipShape(RoundedRectangle(cornerRadius: 20))
-                        case .failure:
-                            Image(systemName: "photo")
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 390, height: 500)
-                                .clipShape(RoundedRectangle(cornerRadius: 20))
-                        default:
-                            EmptyView()
-                    }
-                    
-                    Text(manga?.title ?? "Nombre del manga")
-                        .frame(width: 330 ,alignment: .leading)
-                        .font(.title)
-                        .bold()
-                        .fontWidth(.compressed)
-                    
-                }
+                imageAsinc(imagen: manga?.mainPicture ?? "nil",width:360,height: 600,radio: 0)
+                mangaName(mangaName: manga?.title ?? "manga sin Nombre" , width: 330)
             }
         }
-        
     }
 }
-private func cleanUrl(_ urlString: String) -> String {
-    var cleanedUrl = urlString.trimmingCharacters(in: .whitespacesAndNewlines)
-    cleanedUrl = cleanedUrl.replacingOccurrences(of: "\"", with: "")
-    return cleanedUrl
-}
+
 #Preview("MangaComponet") {
     ZStack{
         Color.gray

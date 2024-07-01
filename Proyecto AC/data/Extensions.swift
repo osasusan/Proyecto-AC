@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import SwiftUI
+
 
 
 extension URL{
@@ -60,7 +62,44 @@ func unixToDate(date: String) -> String {
     return date
     
 }
-
+extension View{
+    
+    func mangaName(mangaName:String,width:CGFloat)->some View{
+        Text(mangaName)
+            .frame(width: width ,alignment: .leading)
+            .font(.title)
+            .bold()
+            .fontWidth(.compressed)
+    }
+    
+    func imageAsinc(imagen: String,width:CGFloat,height:CGFloat,radio:CGFloat)-> some View{
+        VStack{
+            AsyncImage(url: URL(string: cleanUrl(imagen))){ phase in
+                switch phase {
+                    case .empty:
+                        ProgressView()
+                    case .success(let image):
+                        image.resizable()
+                            .clipShape(RoundedRectangle(cornerRadius: radio))
+                    case .failure:
+                        Image(systemName: "photo")
+                            .resizable()
+                            .clipShape(RoundedRectangle(cornerRadius: radio))
+                    default:
+                        EmptyView()
+                }
+            }
+            .scaledToFit()
+            .frame(width: width, height: height)
+            
+        }
+    }
+    private func cleanUrl(_ urlString: String) -> String {
+        var cleanedUrl = urlString.trimmingCharacters(in: .whitespacesAndNewlines)
+        cleanedUrl = cleanedUrl.replacingOccurrences(of: "\"", with: "")
+        return cleanedUrl
+    }
+}
 enum shFilter : String ,CaseIterable{
     case topMangas = "Top mangas"
     case temas = "Temas"

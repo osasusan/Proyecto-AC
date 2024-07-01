@@ -24,20 +24,13 @@ struct ContentView: View {
                             .padding()
                         
                     } else{
-                        
-                        //                    ForEach(vm.contenBg,id: \.id){ be in
-                        //                            MangaComponet(mangaURL: be.mainPicture,nameManga: "hola")
-                        //
-                        //
-                        //                    }
                         if let metadata = vm.metadata {
-                            ForEach(vm.mangas, id: \.id) { item in
+                            
+                            List(vm.mangas, id: \.id) { item in
                                 NavigationLink(destination:MangaDetailVeiw(manga: item)){
                                     MangaComponetDetalle(manga: item)
                                         .foregroundStyle(.black)
                                 }
-                                
-                                
                             }
                             VStack(alignment:.center){
                                 

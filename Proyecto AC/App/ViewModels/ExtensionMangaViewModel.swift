@@ -12,7 +12,7 @@ extension MangasViewModel{
     //     Listado de mangas general
     func fetchMangas(pages:Int) async throws -> MangasResponse{
         let url = URL.URLPagesChange(url: URL.URLMangas, page: pages)
-        let (data, response) = try await sareed.requiesProvider(false, url: url ,type: .GET, params: nil)
+        let (data, response) = try await sareed.requiesProvider(false, url: url ,type: .GET, params: nil,nil,nil)
         
         guard let httpResponse = response as? HTTPURLResponse,
               httpResponse.statusCode == 200 else{
@@ -34,7 +34,7 @@ extension MangasViewModel{
         
         let url = URL.URLPagesChange(url: URL.URLTopMangas, page: pages)
         print(url)
-        let (data , respose) = try await sareed.requiesProvider(false, url: url, type: .GET, params: nil)
+        let (data , respose) = try await sareed.requiesProvider(false, url: url, type: .GET, params: nil,nil,nil)
         
         guard let httpRespose = respose as? HTTPURLResponse, httpRespose.statusCode == 200 else {
             throw NetworkError.networkErrorEnum.badRequest
@@ -42,7 +42,7 @@ extension MangasViewModel{
         JSONDecoder().keyDecodingStrategy = .convertFromSnakeCase
         do{
             let response = try JSONDecoder().decode(MangasResponse.self, from: data)
-            print(response)
+//            print(response)
             return response
         }catch{
             print("Error decoding JSON: \(NetworkError.networkErrorEnum.badRequest)")
@@ -56,7 +56,7 @@ extension MangasViewModel{
         let url = URL.URLGenresMangaList
         let urlFinal = URL.ContetPages(url: url, contenido: gen, pages: page)
         
-        let (data , respose) = try await sareed.requiesProvider(false, url:urlFinal, type: .GET, params: nil)
+        let (data , respose) = try await sareed.requiesProvider(false, url:urlFinal, type: .GET, params: nil,nil,nil)
         
         guard let httpRespose = respose as? HTTPURLResponse, httpRespose.statusCode == 200 else {
             throw NetworkError.networkErrorEnum.badRequest
@@ -75,7 +75,7 @@ extension MangasViewModel{
     //     Listado de Generos
     func getGens() async throws -> [String] {
         do{
-            let (data , response) = try await NetworkHelper.shared.requiesProvider(false, url: URL.URLGens, type: .GET, params: nil)
+            let (data , response) = try await NetworkHelper.shared.requiesProvider(false, url: URL.URLGens, type: .GET, params: nil,nil,nil)
             guard let httpRespose = response as? HTTPURLResponse, httpRespose.statusCode == 200 else {
                 throw NetworkError.networkErrorEnum.badRequest
             }
@@ -98,7 +98,7 @@ extension MangasViewModel{
     func getThema() async throws -> [String] {
         
         do{
-            let (data , response) = try await NetworkHelper.shared.requiesProvider(false, url: URL.URLTemas, type: .GET, params: nil)
+            let (data , response) = try await NetworkHelper.shared.requiesProvider(false, url: URL.URLTemas, type: .GET, params: nil,nil,nil)
             guard let httpRespose = response as? HTTPURLResponse, httpRespose.statusCode == 200 else {
                 throw NetworkError.networkErrorEnum.badRequest
             }
@@ -125,7 +125,7 @@ extension MangasViewModel{
         let funalURl = URL.ContetPages(url: url, contenido: gen, pages:pages)
         
         //        let (data , respose) = try await helperr.requiesProvider(url: url, type: .GET, params: nil)
-        let (data , respose) = try await sareed.requiesProvider(false, url: funalURl, type: .GET, params: nil)
+        let (data , respose) = try await sareed.requiesProvider(false, url: funalURl, type: .GET, params: nil,nil,nil)
         
         guard let httpRespose = respose as? HTTPURLResponse, httpRespose.statusCode == 200 else {
             throw NetworkError.networkErrorEnum.badRequest
@@ -145,7 +145,7 @@ extension MangasViewModel{
     func getDemos() async throws -> [String] {
         
         do{
-            let (data , response) = try await NetworkHelper.shared.requiesProvider(false, url: URL.URLDemos, type: .GET, params: nil)
+            let (data , response) = try await sareed.requiesProvider(false, url: URL.URLDemos, type: .GET, params: nil,nil,nil)
             guard let httpRespose = response as? HTTPURLResponse, httpRespose.statusCode == 200 else {
                 throw NetworkError.networkErrorEnum.badRequest
             }
@@ -167,7 +167,7 @@ extension MangasViewModel{
     //Listado de Autores
     func getAuthor() async throws -> [Author] {
         do{
-            let (data, response) = try await NetworkHelper.shared.requiesProvider(false, url: URL.URLAutor, type: .GET, params: nil)
+            let (data, response) = try await NetworkHelper.shared.requiesProvider(false, url: URL.URLAutor, type: .GET, params: nil,nil,nil)
             
             guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else{
                 throw NetworkError.networkErrorEnum.badRequest
@@ -231,7 +231,7 @@ extension MangasViewModel{
         do{
             let url = URL.PutContet(url: URL.URLmangaBegings, content: conten)
             
-            let (data,response) = try await sareed.requiesProvider(false, url: url, type: .GET, params: nil)
+            let (data,response) = try await sareed.requiesProvider(false, url: url, type: .GET, params: nil,nil,nil)
             
             guard let httpResponse = response as? HTTPURLResponse,httpResponse.statusCode == 200 else{
                 throw NetworkError.networkErrorEnum.badRequest

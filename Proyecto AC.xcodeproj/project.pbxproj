@@ -78,7 +78,7 @@
 		483B61C82C0799F3002A5F70 /* Proyecto AC */ = {
 			isa = PBXGroup;
 			children = (
-				483B61CB2C0799F3002A5F70 /* ContentView.swift */,
+				483B61C92C0799F3002A5F70 /* Proyecto_ACApp.swift */,
 				483B61E02C0BB8B0002A5F70 /* App */,
 				483B61E12C0BB8D6002A5F70 /* Data */,
 				483B61DF2C0BB8A1002A5F70 /* Models */,
@@ -118,7 +118,7 @@
 		483B61E02C0BB8B0002A5F70 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				483B61C92C0799F3002A5F70 /* Proyecto_ACApp.swift */,
+				483B61CB2C0799F3002A5F70 /* ContentView.swift */,
 				485AD7152C1A5DE200F36677 /* ViewModels */,
 				485AD7192C1A854700F36677 /* componets */,
 				485AD7182C1A853900F36677 /* View */,
