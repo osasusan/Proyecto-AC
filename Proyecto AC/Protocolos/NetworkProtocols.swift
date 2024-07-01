@@ -8,10 +8,7 @@
 import Foundation
 
 protocol NetworkProtocol {
-    
-    
- 
-    func requiesProvider(url: String, type: NetworkHelper.RequestType , params:[String: Any]?) async throws -> (Data, URLResponse)
+    func requiesProvider(_ neToken : Bool, url: URL, type: NetworkHelper.RequestType , params:[String: Any]?) async throws -> (Data, URLResponse)
     
 }
 

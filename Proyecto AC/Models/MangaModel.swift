@@ -61,6 +61,11 @@ struct Item:Codable{
     let titleEnglish: String?
     
 }
+struct ItemsResponse :Codable{
+    let items : [Item]
+}
+
+
 
 
 

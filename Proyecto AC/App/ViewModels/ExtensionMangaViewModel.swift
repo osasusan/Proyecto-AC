@@ -9,12 +9,10 @@ import Foundation
 
 extension MangasViewModel{
     
-    // Listado de mangas general
+    //     Listado de mangas general
     func fetchMangas(pages:Int) async throws -> MangasResponse{
-        
-        let url = "https://mymanga-acacademy-5607149ebe3d.herokuapp.com/list/mangas?page=\(pages)&per=20"
-        
-        let (data, response) = try await sareed.requiesProvider(url: url ,type: .GET, params: nil)
+        let url = URL.URLPagesChange(url: URL.URLMangas, page: pages)
+        let (data, response) = try await sareed.requiesProvider(false, url: url ,type: .GET, params: nil)
         
         guard let httpResponse = response as? HTTPURLResponse,
               httpResponse.statusCode == 200 else{
@@ -34,9 +32,9 @@ extension MangasViewModel{
     // Listado de TOp mangas
     func topMangas(pages: Int) async throws -> MangasResponse {
         
-        let url = "https://mymanga-acacademy-5607149ebe3d.herokuapp.com/list/bestMangas?page=\(pages)&per=20"
-        
-        let (data , respose) = try await sareed.requiesProvider(url: url, type: .GET, params: nil)
+        let url = URL.URLPagesChange(url: URL.URLTopMangas, page: pages)
+        print(url)
+        let (data , respose) = try await sareed.requiesProvider(false, url: url, type: .GET, params: nil)
         
         guard let httpRespose = respose as? HTTPURLResponse, httpRespose.statusCode == 200 else {
             throw NetworkError.networkErrorEnum.badRequest
@@ -44,7 +42,7 @@ extension MangasViewModel{
         JSONDecoder().keyDecodingStrategy = .convertFromSnakeCase
         do{
             let response = try JSONDecoder().decode(MangasResponse.self, from: data)
-            print(data)
+            print(response)
             return response
         }catch{
             print("Error decoding JSON: \(NetworkError.networkErrorEnum.badRequest)")
@@ -52,13 +50,13 @@ extension MangasViewModel{
             throw NetworkError.networkErrorEnum.badRequest
         }
     }
-    // Listado de generos de manga
-    func mangaGen(pages: Int,gen:String) async throws -> MangasResponse {
+    //     Listado de generos de manga
+    func mangaGen(page:Int,gen:String) async throws -> MangasResponse {
         
-        let url = "https://mymanga-acacademy-5607149ebe3d.herokuapp.com/list/mangaByGenre/\(gen)?page=\(pages)&per=20"
+        let url = URL.URLGenresMangaList
+        let urlFinal = URL.ContetPages(url: url, contenido: gen, pages: page)
         
-        //        let (data , respose) = try await helperr.requiesProvider(url: url, type: .GET, params: nil)
-        let (data , respose) = try await sareed.requiesProvider(url: url, type: .GET, params: nil)
+        let (data , respose) = try await sareed.requiesProvider(false, url:urlFinal, type: .GET, params: nil)
         
         guard let httpRespose = respose as? HTTPURLResponse, httpRespose.statusCode == 200 else {
             throw NetworkError.networkErrorEnum.badRequest
@@ -74,15 +72,13 @@ extension MangasViewModel{
             throw NetworkError.networkErrorEnum.badRequest
         }
     }
-    // Listado de Generos
+    //     Listado de Generos
     func getGens() async throws -> [String] {
-        let url = "https://mymanga-acacademy-5607149ebe3d.herokuapp.com/list/genres"
         do{
-            let (data , response) = try await NetworkHelper.shared.requiesProvider(url: url, type: .GET, params: nil)
+            let (data , response) = try await NetworkHelper.shared.requiesProvider(false, url: URL.URLGens, type: .GET, params: nil)
             guard let httpRespose = response as? HTTPURLResponse, httpRespose.statusCode == 200 else {
                 throw NetworkError.networkErrorEnum.badRequest
             }
-            
             let decoder = JSONDecoder()
             do{
                 let themes = try decoder.decode([String].self, from: data)
@@ -100,9 +96,9 @@ extension MangasViewModel{
     }
     // Listado de temas de mangas
     func getThema() async throws -> [String] {
-        let url = "https://mymanga-acacademy-5607149ebe3d.herokuapp.com/list/themes"
+        
         do{
-            let (data , response) = try await NetworkHelper.shared.requiesProvider(url: url, type: .GET, params: nil)
+            let (data , response) = try await NetworkHelper.shared.requiesProvider(false, url: URL.URLTemas, type: .GET, params: nil)
             guard let httpRespose = response as? HTTPURLResponse, httpRespose.statusCode == 200 else {
                 throw NetworkError.networkErrorEnum.badRequest
             }
@@ -125,10 +121,11 @@ extension MangasViewModel{
     
     func listMangaDemos(pages: Int,gen:String) async throws -> MangasResponse {
         
-        let url = "https://mymanga-acacademy-5607149ebe3d.herokuapp.com/list/mangaByDemographic/\(gen)?page=\(pages)&per=20"
+        let url = URL.URLDemosMangaList
+        let funalURl = URL.ContetPages(url: url, contenido: gen, pages:pages)
         
         //        let (data , respose) = try await helperr.requiesProvider(url: url, type: .GET, params: nil)
-        let (data , respose) = try await sareed.requiesProvider(url: url, type: .GET, params: nil)
+        let (data , respose) = try await sareed.requiesProvider(false, url: funalURl, type: .GET, params: nil)
         
         guard let httpRespose = respose as? HTTPURLResponse, httpRespose.statusCode == 200 else {
             throw NetworkError.networkErrorEnum.badRequest
@@ -146,9 +143,9 @@ extension MangasViewModel{
     }
     //Listado de Demografias
     func getDemos() async throws -> [String] {
-        let url = "https://mymanga-acacademy-5607149ebe3d.herokuapp.com/list/demographics"
+        
         do{
-            let (data , response) = try await NetworkHelper.shared.requiesProvider(url: url, type: .GET, params: nil)
+            let (data , response) = try await NetworkHelper.shared.requiesProvider(false, url: URL.URLDemos, type: .GET, params: nil)
             guard let httpRespose = response as? HTTPURLResponse, httpRespose.statusCode == 200 else {
                 throw NetworkError.networkErrorEnum.badRequest
             }
@@ -167,13 +164,10 @@ extension MangasViewModel{
             throw error
         }
     }
-    
     //Listado de Autores
-    
     func getAuthor() async throws -> [Author] {
-        let url = "https://mymanga-acacademy-5607149ebe3d.herokuapp.com/list/authors"
         do{
-            let (data, response) = try await NetworkHelper.shared.requiesProvider(url: url, type: .GET, params: nil)
+            let (data, response) = try await NetworkHelper.shared.requiesProvider(false, url: URL.URLAutor, type: .GET, params: nil)
             
             guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else{
                 throw NetworkError.networkErrorEnum.badRequest
@@ -192,52 +186,52 @@ extension MangasViewModel{
         }
     }
     
-    func getMangaID(id: Int) async throws -> Item{
-        let url = "https://mymanga-acacademy-5607149ebe3d.herokuapp.com/search/manga/\(id)"
-        
-        let (data,response) = try await sareed.requiesProvider(url: url, type: .GET, params: nil)
-        guard let httpResponse = response as? HTTPURLResponse,httpResponse.statusCode == 200 else {
-            throw NetworkError.networkErrorEnum.badRequest
-        }
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        do{
-            
-            let response = try decoder.decode(Item.self,from: data)
-            print(response)
-            return response
-            
-        }catch{
-            throw NetworkError.networkErrorEnum.requestFailed
-        }
-    }
+    //    func getMangaID(id: Int) async throws -> Item{
+    //        let url = "https://mymanga-acacademy-5607149ebe3d.herokuapp.com/search/manga/\(id)"
+    //
+    //        let (data,response) = try await sareed.requiesProvider(false, url: url, type: .GET, params: nil, nil , nil)
+    //        guard let httpResponse = response as? HTTPURLResponse,httpResponse.statusCode == 200 else {
+    //            throw NetworkError.networkErrorEnum.badRequest
+    //        }
+    //        let decoder = JSONDecoder()
+    //        decoder.keyDecodingStrategy = .convertFromSnakeCase
+    //        do{
+    //
+    //            let response = try decoder.decode(Item.self,from: data)
+    //            print(response)
+    //            return response
+    //
+    //        }catch{
+    //            throw NetworkError.networkErrorEnum.requestFailed
+    //        }
+    //    }
     // buscada por contenido
     
-    func mangaContais(conten: String ,pages:Int)async throws -> MangasResponse {
-        do{
-            let url = "https://mymanga-acacademy-5607149ebe3d.herokuapp.com/search/mangasContains/\(conten)?page=\(pages)&per=20"
-            let (data,response) = try await sareed.requiesProvider(url: url, type: .GET, params: nil)
-            guard let httpResponse = response as? HTTPURLResponse,httpResponse.statusCode == 200 else{
-                throw NetworkError.networkErrorEnum.badRequest
-            }
-            let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
-            do{
-                let response = try decoder.decode(MangasResponse.self,from: data)
-                return response
-            } catch{
-                throw NetworkError.networkErrorEnum.requestFailed
-            }
-        }catch{
-            throw error
-        }
-    }
-    //empieza por 
+    //    func mangaContais(conten: String ,pages:Int)async throws -> MangasResponse {
+    //        do{
+    //            let url = "https://mymanga-acacademy-5607149ebe3d.herokuapp.com/search/mangasContains/\(conten)?page=\(pages)&per=20"
+    //            let (data,response) = try await sareed.requiesProvider(false, url: url, type: .GET, params: nil, nil , nil)
+    //            guard let httpResponse = response as? HTTPURLResponse,httpResponse.statusCode == 200 else{
+    //                throw NetworkError.networkErrorEnum.badRequest
+    //            }
+    //            let decoder = JSONDecoder()
+    //            decoder.keyDecodingStrategy = .convertFromSnakeCase
+    //            do{
+    //                let response = try decoder.decode(MangasResponse.self,from: data)
+    //                return response
+    //            } catch{
+    //                throw NetworkError.networkErrorEnum.requestFailed
+    //            }
+    //        }catch{
+    //            throw error
+    //        }
+    //    }
+    //empieza por
     func mangaBegings(conten: String)async throws ->[Item]{
         do{
-            let url = "https://mymanga-acacademy-5607149ebe3d.herokuapp.com/search/mangasBeginsWith/\(conten)"
+            let url = URL.PutContet(url: URL.URLmangaBegings, content: conten)
             
-            let (data,response) = try await sareed.requiesProvider(url: url, type: .GET, params: nil)
+            let (data,response) = try await sareed.requiesProvider(false, url: url, type: .GET, params: nil)
             
             guard let httpResponse = response as? HTTPURLResponse,httpResponse.statusCode == 200 else{
                 throw NetworkError.networkErrorEnum.badRequest
@@ -257,3 +251,4 @@ extension MangasViewModel{
         }
     }
 }
+

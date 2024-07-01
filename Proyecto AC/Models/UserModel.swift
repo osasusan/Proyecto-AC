@@ -13,7 +13,7 @@ struct UserModel:Codable{
     
     enum CodingKeys: String,CodingKey {
         case email
-        case password = "pass"
+        case password 
     }
     
     init(from decoder: any Decoder) throws {

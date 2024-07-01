@@ -20,6 +20,10 @@
 		485AD71B2C1A856E00F36677 /* MangaComponet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485AD71A2C1A856E00F36677 /* MangaComponet.swift */; };
 		485AD71D2C1CF0E100F36677 /* ExtensionMangaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485AD71C2C1CF0E100F36677 /* ExtensionMangaViewModel.swift */; };
 		485AD7222C1D096400F36677 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485AD7212C1D096400F36677 /* UserModel.swift */; };
+		48BEF2942C2B9B0A006E2177 /* HomeVeiw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BEF2932C2B9B0A006E2177 /* HomeVeiw.swift */; };
+		48BEF2962C2C4A89006E2177 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BEF2952C2C4A89006E2177 /* LoginView.swift */; };
+		48BEF2982C2C4A9E006E2177 /* LoginVeiwModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BEF2972C2C4A9E006E2177 /* LoginVeiwModel.swift */; };
+		48BEF29A2C30B56B006E2177 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BEF2992C30B56B006E2177 /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +42,10 @@
 		485AD71A2C1A856E00F36677 /* MangaComponet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaComponet.swift; sourceTree = "<group>"; };
 		485AD71C2C1CF0E100F36677 /* ExtensionMangaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionMangaViewModel.swift; sourceTree = "<group>"; };
 		485AD7212C1D096400F36677 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		48BEF2932C2B9B0A006E2177 /* HomeVeiw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVeiw.swift; sourceTree = "<group>"; };
+		48BEF2952C2C4A89006E2177 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		48BEF2972C2C4A9E006E2177 /* LoginVeiwModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVeiwModel.swift; sourceTree = "<group>"; };
+		48BEF2992C30B56B006E2177 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +78,7 @@
 		483B61C82C0799F3002A5F70 /* Proyecto AC */ = {
 			isa = PBXGroup;
 			children = (
+				483B61CB2C0799F3002A5F70 /* ContentView.swift */,
 				483B61E02C0BB8B0002A5F70 /* App */,
 				483B61E12C0BB8D6002A5F70 /* Data */,
 				483B61DF2C0BB8A1002A5F70 /* Models */,
@@ -122,6 +131,7 @@
 			children = (
 				483B61D82C079C17002A5F70 /* NetworkHelper.swift */,
 				483B61DD2C07A62C002A5F70 /* NetworkError.swift */,
+				48BEF2992C30B56B006E2177 /* Extensions.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -158,7 +168,7 @@
 		485AD71E2C1D08A400F36677 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				483B61CB2C0799F3002A5F70 /* ContentView.swift */,
+				48BEF2932C2B9B0A006E2177 /* HomeVeiw.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -173,6 +183,8 @@
 		485AD7202C1D08BC00F36677 /* Accout */ = {
 			isa = PBXGroup;
 			children = (
+				48BEF2952C2C4A89006E2177 /* LoginView.swift */,
+				48BEF2972C2C4A9E006E2177 /* LoginVeiwModel.swift */,
 			);
 			path = Accout;
 			sourceTree = "<group>";
@@ -262,7 +274,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48BEF2982C2C4A9E006E2177 /* LoginVeiwModel.swift in Sources */,
 				483B61DC2C079D02002A5F70 /* NetworkProtocols.swift in Sources */,
+				48BEF2942C2B9B0A006E2177 /* HomeVeiw.swift in Sources */,
 				483837A72C25DB5A00799F9F /* ThemsComponet.swift in Sources */,
 				483B61D92C079C17002A5F70 /* NetworkHelper.swift in Sources */,
 				485AD71B2C1A856E00F36677 /* MangaComponet.swift in Sources */,
@@ -270,7 +284,9 @@
 				485AD7142C1A58E300F36677 /* MangaModel.swift in Sources */,
 				483B61CC2C0799F3002A5F70 /* ContentView.swift in Sources */,
 				485AD71D2C1CF0E100F36677 /* ExtensionMangaViewModel.swift in Sources */,
+				48BEF29A2C30B56B006E2177 /* Extensions.swift in Sources */,
 				483B61CA2C0799F3002A5F70 /* Proyecto_ACApp.swift in Sources */,
+				48BEF2962C2C4A89006E2177 /* LoginView.swift in Sources */,
 				485AD7222C1D096400F36677 /* UserModel.swift in Sources */,
 				483B61DE2C07A62C002A5F70 /* NetworkError.swift in Sources */,
 			);
