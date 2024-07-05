@@ -22,28 +22,28 @@ extension URL{
     static var URLDemos:URL { return URL(string:"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/list/demographics")!}
     static var URLAutor:URL { return URL(string:"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/list/authors")!}
     static var URLGenresMangaList:URL {return URL(string:"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/list/mangaByGenre/")!}
+    static var URLMangasID:URL {return URL(string:"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/search/manga/")!}
     static var URLDemosMangaList:URL {return URL(string:"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/list/mangaByDemographic/")!}
     static var URLmangaBegings:URL {return URL(string:"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/search/mangasBeginsWith/")!}
     static var URLLogin:URL {return URL(string:"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/users/login")!}
     
     
     static func PutContet(url:URL ,content: String) -> URL{
-        
         return  url.appendingPathComponent(content)
     }
-    static func URLPagesChange(url: URL,page: Int ) ->URL{
+    static func URLPagesChange(url: URL,page: Int,per:Int?) ->URL{
         var components = URLComponents(url: url, resolvingAgainstBaseURL: false)
         let queryItems = [
             URLQueryItem(name: "page", value: "\(page)"),
-            URLQueryItem(name: "per", value: "20")
+            URLQueryItem(name: "per", value: "\(per ?? 20)")
         ]
         components?.queryItems = queryItems
         return components?.url ?? url
         
     }
-    static func ContetPages(url:URL,contenido:String, pages:Int)-> URL {
+    static func ContetPages(url:URL,contenido:String, pages:Int,por:Int?)-> URL {
         let contetPages = URL.PutContet(url: url, content:contenido )
-        let UrlFinal = URL.URLPagesChange(url: contetPages, page: pages )
+        let UrlFinal = URL.URLPagesChange(url:contetPages,page: pages, per: por ?? 20)
         return UrlFinal
     }
 }
@@ -80,18 +80,20 @@ extension View{
                         ProgressView()
                     case .success(let image):
                         image.resizable()
+                            
                             .clipShape(RoundedRectangle(cornerRadius: radio))
+                            .frame(width: width, height: height)
                     case .failure:
                         Image(systemName: "photo")
+                            
                             .resizable()
                             .clipShape(RoundedRectangle(cornerRadius: radio))
+                            .frame(width: width, height: height)
                     default:
                         EmptyView()
                 }
             }
-            .scaledToFit()
-            .frame(width: width, height: height)
-            
+           
         }
     }
     private func cleanUrl(_ urlString: String) -> String {

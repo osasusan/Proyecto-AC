@@ -24,6 +24,8 @@
 		48BEF2962C2C4A89006E2177 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BEF2952C2C4A89006E2177 /* LoginView.swift */; };
 		48BEF2982C2C4A9E006E2177 /* LoginVeiwModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BEF2972C2C4A9E006E2177 /* LoginVeiwModel.swift */; };
 		48BEF29A2C30B56B006E2177 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BEF2992C30B56B006E2177 /* Extensions.swift */; };
+		48CD10812C335CF7009F56F4 /* ExtesionHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CD10802C335CF7009F56F4 /* ExtesionHomeView.swift */; };
+		48CD10842C355F64009F56F4 /* ListasSimples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CD10832C355F64009F56F4 /* ListasSimples.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +48,8 @@
 		48BEF2952C2C4A89006E2177 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		48BEF2972C2C4A9E006E2177 /* LoginVeiwModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVeiwModel.swift; sourceTree = "<group>"; };
 		48BEF2992C30B56B006E2177 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		48CD10802C335CF7009F56F4 /* ExtesionHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtesionHomeView.swift; sourceTree = "<group>"; };
+		48CD10832C355F64009F56F4 /* ListasSimples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListasSimples.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +84,7 @@
 			children = (
 				483B61C92C0799F3002A5F70 /* Proyecto_ACApp.swift */,
 				483B61E02C0BB8B0002A5F70 /* App */,
+				48CD10822C33890F009F56F4 /* Extensiones */,
 				483B61E12C0BB8D6002A5F70 /* Data */,
 				483B61DF2C0BB8A1002A5F70 /* Models */,
 				483B61DA2C079CD1002A5F70 /* Protocolos */,
@@ -120,7 +125,6 @@
 			children = (
 				483B61CB2C0799F3002A5F70 /* ContentView.swift */,
 				485AD7152C1A5DE200F36677 /* ViewModels */,
-				485AD7192C1A854700F36677 /* componets */,
 				485AD7182C1A853900F36677 /* View */,
 			);
 			path = App;
@@ -131,7 +135,6 @@
 			children = (
 				483B61D82C079C17002A5F70 /* NetworkHelper.swift */,
 				483B61DD2C07A62C002A5F70 /* NetworkError.swift */,
-				48BEF2992C30B56B006E2177 /* Extensions.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -161,6 +164,7 @@
 			children = (
 				485AD71A2C1A856E00F36677 /* MangaComponet.swift */,
 				483837A62C25DB5A00799F9F /* ThemsComponet.swift */,
+				48CD10832C355F64009F56F4 /* ListasSimples.swift */,
 			);
 			path = componets;
 			sourceTree = "<group>";
@@ -169,6 +173,7 @@
 			isa = PBXGroup;
 			children = (
 				48BEF2932C2B9B0A006E2177 /* HomeVeiw.swift */,
+				48CD10802C335CF7009F56F4 /* ExtesionHomeView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -202,6 +207,15 @@
 			children = (
 			);
 			path = filtro;
+			sourceTree = "<group>";
+		};
+		48CD10822C33890F009F56F4 /* Extensiones */ = {
+			isa = PBXGroup;
+			children = (
+				485AD7192C1A854700F36677 /* componets */,
+				48BEF2992C30B56B006E2177 /* Extensions.swift */,
+			);
+			path = Extensiones;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -278,7 +292,9 @@
 				483B61DC2C079D02002A5F70 /* NetworkProtocols.swift in Sources */,
 				48BEF2942C2B9B0A006E2177 /* HomeVeiw.swift in Sources */,
 				483837A72C25DB5A00799F9F /* ThemsComponet.swift in Sources */,
+				48CD10812C335CF7009F56F4 /* ExtesionHomeView.swift in Sources */,
 				483B61D92C079C17002A5F70 /* NetworkHelper.swift in Sources */,
+				48CD10842C355F64009F56F4 /* ListasSimples.swift in Sources */,
 				485AD71B2C1A856E00F36677 /* MangaComponet.swift in Sources */,
 				485AD7172C1A5E0E00F36677 /* MangasViewModel.swift in Sources */,
 				485AD7142C1A58E300F36677 /* MangaModel.swift in Sources */,
