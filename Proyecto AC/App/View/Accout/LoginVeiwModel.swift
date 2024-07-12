@@ -10,7 +10,7 @@ import Foundation
 class LoginVeiwModel : ObservableObject{
     
     
-    @Published var email : String = ""
+    @Published var email : String = "jcfmunoz@icloud.com"
     @Published var pass : String = ""
     @Published var token : String = ""
     @Published var errorMensage :String?
@@ -21,6 +21,7 @@ class LoginVeiwModel : ObservableObject{
     func logUser(user:String,pass:String)async {
         do{
             let response = try await login(username:user,pass:pass)
+            print(response)
             NetworkHelper.shared.setToken(tokens: response)
            
         }catch let error as NetworkError.networkErrorEnum{

@@ -20,6 +20,10 @@
 		485AD71B2C1A856E00F36677 /* MangaComponet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485AD71A2C1A856E00F36677 /* MangaComponet.swift */; };
 		485AD71D2C1CF0E100F36677 /* ExtensionMangaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485AD71C2C1CF0E100F36677 /* ExtensionMangaViewModel.swift */; };
 		485AD7222C1D096400F36677 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485AD7212C1D096400F36677 /* UserModel.swift */; };
+		485D1BFB2C3C72B4004F6ABB /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485D1BFA2C3C72B4004F6ABB /* TabBar.swift */; };
+		485D1BFD2C3C7DAB004F6ABB /* FavoritesVeiw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485D1BFC2C3C7DAB004F6ABB /* FavoritesVeiw.swift */; };
+		485D1BFF2C3CC0BD004F6ABB /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 485D1BFE2C3CC0BD004F6ABB /* Launch Screen.storyboard */; };
+		485D1C012C3F1B25004F6ABB /* SearcheAndFilterBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485D1C002C3F1B25004F6ABB /* SearcheAndFilterBar.swift */; };
 		48BEF2942C2B9B0A006E2177 /* HomeVeiw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BEF2932C2B9B0A006E2177 /* HomeVeiw.swift */; };
 		48BEF2962C2C4A89006E2177 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BEF2952C2C4A89006E2177 /* LoginView.swift */; };
 		48BEF2982C2C4A9E006E2177 /* LoginVeiwModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BEF2972C2C4A9E006E2177 /* LoginVeiwModel.swift */; };
@@ -44,6 +48,10 @@
 		485AD71A2C1A856E00F36677 /* MangaComponet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaComponet.swift; sourceTree = "<group>"; };
 		485AD71C2C1CF0E100F36677 /* ExtensionMangaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionMangaViewModel.swift; sourceTree = "<group>"; };
 		485AD7212C1D096400F36677 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		485D1BFA2C3C72B4004F6ABB /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
+		485D1BFC2C3C7DAB004F6ABB /* FavoritesVeiw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesVeiw.swift; sourceTree = "<group>"; };
+		485D1BFE2C3CC0BD004F6ABB /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		485D1C002C3F1B25004F6ABB /* SearcheAndFilterBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearcheAndFilterBar.swift; sourceTree = "<group>"; };
 		48BEF2932C2B9B0A006E2177 /* HomeVeiw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVeiw.swift; sourceTree = "<group>"; };
 		48BEF2952C2C4A89006E2177 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		48BEF2972C2C4A9E006E2177 /* LoginVeiwModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVeiwModel.swift; sourceTree = "<group>"; };
@@ -66,6 +74,7 @@
 		483B61BD2C0799F3002A5F70 = {
 			isa = PBXGroup;
 			children = (
+				485D1BFE2C3CC0BD004F6ABB /* Launch Screen.storyboard */,
 				483B61C82C0799F3002A5F70 /* Proyecto AC */,
 				483B61C72C0799F3002A5F70 /* Products */,
 			);
@@ -91,6 +100,7 @@
 				483B61CD2C0799F6002A5F70 /* Assets.xcassets */,
 				483B61CF2C0799F6002A5F70 /* Proyecto_AC.entitlements */,
 				483B61D02C0799F6002A5F70 /* Preview Content */,
+				485D1BFA2C3C72B4004F6ABB /* TabBar.swift */,
 			);
 			path = "Proyecto AC";
 			sourceTree = "<group>";
@@ -181,6 +191,7 @@
 		485AD71F2C1D08AC00F36677 /* Favorites */ = {
 			isa = PBXGroup;
 			children = (
+				485D1BFC2C3C7DAB004F6ABB /* FavoritesVeiw.swift */,
 			);
 			path = Favorites;
 			sourceTree = "<group>";
@@ -205,6 +216,7 @@
 		485AD7242C1D1E1900F36677 /* filtro */ = {
 			isa = PBXGroup;
 			children = (
+				485D1C002C3F1B25004F6ABB /* SearcheAndFilterBar.swift */,
 			);
 			path = filtro;
 			sourceTree = "<group>";
@@ -276,6 +288,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				485D1BFF2C3CC0BD004F6ABB /* Launch Screen.storyboard in Resources */,
 				483B61D22C0799F6002A5F70 /* Preview Assets.xcassets in Resources */,
 				483B61CE2C0799F6002A5F70 /* Assets.xcassets in Resources */,
 			);
@@ -297,8 +310,11 @@
 				48CD10842C355F64009F56F4 /* ListasSimples.swift in Sources */,
 				485AD71B2C1A856E00F36677 /* MangaComponet.swift in Sources */,
 				485AD7172C1A5E0E00F36677 /* MangasViewModel.swift in Sources */,
+				485D1C012C3F1B25004F6ABB /* SearcheAndFilterBar.swift in Sources */,
+				485D1BFB2C3C72B4004F6ABB /* TabBar.swift in Sources */,
 				485AD7142C1A58E300F36677 /* MangaModel.swift in Sources */,
 				483B61CC2C0799F3002A5F70 /* ContentView.swift in Sources */,
+				485D1BFD2C3C7DAB004F6ABB /* FavoritesVeiw.swift in Sources */,
 				485AD71D2C1CF0E100F36677 /* ExtensionMangaViewModel.swift in Sources */,
 				48BEF29A2C30B56B006E2177 /* Extensions.swift in Sources */,
 				483B61CA2C0799F3002A5F70 /* Proyecto_ACApp.swift in Sources */,
@@ -430,6 +446,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = "Proyecto AC/Proyecto_AC.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -444,10 +461,11 @@
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -469,6 +487,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = "Proyecto AC/Proyecto_AC.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -483,10 +502,11 @@
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";

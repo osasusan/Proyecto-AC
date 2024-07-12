@@ -11,7 +11,8 @@ import SwiftUI
 struct Proyecto_ACApp: App {
     var body: some Scene {
         WindowGroup {
-            HomeVeiw()
+            TabBar()
+                .preferredColorScheme(.dark)
         }
     }
 }

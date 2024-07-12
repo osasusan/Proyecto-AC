@@ -15,7 +15,7 @@ struct ThemsComponet: View {
             
         }label: {
            Rectangle()
-                .frame(width: 120,height: 120)
+                .frame(width: 150,height: 50)
                 .shadow(radius: 20)
                 .clipShape(RoundedRectangle(cornerRadius: 20))
                 .opacity(0.8)
@@ -24,7 +24,8 @@ struct ThemsComponet: View {
                     VStack(alignment: .center){
                         Text(theme ?? "Hola que tal")
                             .lineLimit(2)
-                            .font(.title3)
+                            .font(.title2)
+                            .fontWidth(.compressed)
                             .fontWeight(.regular)
                             .foregroundStyle(.white)
                     }
@@ -35,5 +36,5 @@ struct ThemsComponet: View {
 }
 
 #Preview {
-    ThemsComponet()
+    ThemsComponet(theme: nil)
 }

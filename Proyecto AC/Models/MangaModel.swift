@@ -13,7 +13,7 @@ struct MangasResponse: Codable {
 }
 
 struct Demographic :Codable{
-    let demographics : String?
+    let demographic : String?
     let id : String?
 }
 struct Theme:Codable {

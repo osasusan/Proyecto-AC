@@ -45,7 +45,7 @@ class NetworkHelper : NetworkProtocol {
         }
         if neToken == true{
 
-            let token = "sLGH38NhEJ0_anlIWwhsz1-LarClEohiAHQqayF0FY"
+            let token = "----------------------------------Y"
             request.addValue("Bearer" + token , forHTTPHeaderField: "App-Token")
             if let username = username, let password = password {
                 let credentials = "\(username):\(password)"

@@ -12,28 +12,18 @@ struct HomeVeiw: View {
     
     @State var page = 1
     var body: some View {
+        
+            
         ZStack{
-            NavigationStack{
-                HStack(spacing: 300){
-                    Image("logo")
-                        .resizable()
-                        .clipShape(Circle())
-                        .frame(width: 50,height: 50)
+            Color.customColor.ignoresSafeArea()
+            ScrollView{
+                VStack(alignment:.leading,spacing:3){
+                    sectorView(titulo: "Top mangas",destino:TopMangasView())
+                    verTop10()
+                    sectorView(titulo: "Mangas", destino: allMnagas())
+                    verMangas()
+                    //                        vermagaID(id: "23")
                     
-                    Button{
-                        
-                    } label: {
-                        Image(systemName: "magnifyingglass")
-                    }
-                }
-                ScrollView{
-                    VStack(alignment:.leading,spacing:3){
-                        sectorView(titulo: "Top mangas",destino: ContentView())
-                        verTop10()
-                        sectorView(titulo: "Mangas", destino: allMnagas())
-                        verMangas()
-                        vermagaID(id: "42")
-                    }
                 }
             }
         }
@@ -41,10 +31,6 @@ struct HomeVeiw: View {
 }
 
 #Preview {
-    ZStack{
-        Color.gray
-            .ignoresSafeArea()
-        HomeVeiw()
-    }
+    HomeVeiw()
 }
 
