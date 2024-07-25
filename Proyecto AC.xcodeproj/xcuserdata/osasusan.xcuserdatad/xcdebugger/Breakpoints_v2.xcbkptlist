@@ -7,32 +7,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "C3594CB4-DB44-4B17-AB41-EA9983133B25"
+            uuid = "5E84E987-5207-409A-92F3-4E629CA3A224"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Proyecto AC/App/ViewModels/MangasViewModel.swift"
+            filePath = "Proyecto AC/App/View/Accout/LoginView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
-            landmarkName = "listTopMangas(page:_:)"
-            landmarkType = "7">
+            startingLineNumber = "58"
+            endingLineNumber = "58"
+            landmarkName = "body"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "46CD6554-AF5F-4E04-8E9A-DBC189270886"
+            uuid = "9CFAD4F4-D831-4239-B3A1-64776ADCEE9F"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Proyecto AC/App/ViewModels/MangasViewModel.swift"
+            filePath = "Proyecto AC/App/ViewModels/LoginVeiwModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
-            landmarkName = "listTopMangas(page:_:)"
+            startingLineNumber = "26"
+            endingLineNumber = "26"
+            landmarkName = "logUser(user:pass:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

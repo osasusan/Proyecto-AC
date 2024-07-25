@@ -15,25 +15,25 @@ extension URL{
     static var URLMangas :URL{return URL(string:"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/list/mangas")!}
     static var URLTopMangas:URL {return URL(string:"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/list/bestMangas")!}
     
-    //    static var URLGenresMangaList { return URL( string:"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/list/mangaByGenre/")!}
+  // temas
     static var URLThemes:URL { return URL(string:"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/list/themes")!}
     static var URLMagasThemes:URL { return URL(string:"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/list/mangaByTheme/")!}
     
-
+//    Autro
     static var URLAutor:URL { return URL(string:"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/list/authors")!}
     static var URLMangaAuthor:URL {return URL(string:"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/list/mangaByAuthor/998C1B16-E3DB-47D1-8157-8389B5345D03")!}
-    
+//    Generos
     static var URLGens:URL { return URL( string:"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/list/genres")!}
     static var URLGenresMangaList:URL {return URL(string:"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/list/mangaByGenre/")!}
-    
-    static var URLMangasID:URL {return URL(string:"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/search/manga/")!}
-    
+
+//    Demografia
     static var URLDemosMangaList:URL {return URL(string:"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/list/mangaByDemographic/")!}
     static var URLDemos:URL { return URL(string:"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/list/demographics")!}
     
     //bUscadores de mangas
     static var URLmangaBegings:URL {return URL(string:"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/search/mangasBeginsWith/")!}
     static var URLmangaContais:URL {return URL(string:"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/search/mangasContains/")!}
+    static var URLMangasID:URL {return URL(string:"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/search/manga/")!}
     
     static var URLLogin:URL {return URL(string:"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/users/login")!}
   
@@ -81,6 +81,7 @@ extension View{
             .fontWidth(.compressed)
             .foregroundStyle(Color.white)
     }
+    
     func imageAsync(imagen: String,width:CGFloat,height:CGFloat,radio:CGFloat)-> some View{
         VStack{
             AsyncImage(url: URL(string: cleanUrl(imagen))){ phase in
@@ -105,21 +106,36 @@ extension View{
         }
     }
     
-    private func cleanUrl(_ urlString: String) -> String {
+    //limpiar url de la Imgen
+     func cleanUrl(_ urlString: String) -> String {
         var cleanedUrl = urlString.trimmingCharacters(in: .whitespacesAndNewlines)
         cleanedUrl = cleanedUrl.replacingOccurrences(of: "\"", with: "")
         return cleanedUrl
     }
+    func transparentListStyle() -> some View {
+        self.modifier(TransparentListStyle())
+    }
 }
-
+//MARK: Color priopio
 extension Color{
     static var customColor :LinearGradient{
         LinearGradient(colors: [Color.pdark,Color.grDark], startPoint: .top, endPoint: .bottom)
     }
 }
+extension Error{
+    func onErrorResposnse() -> String{
+        if let errors = self as? NetworkError.networkErrorEnum {
+            return "Failed to fetch mangas: \(errors.customLocalizedDescription)"
+        }else{
+            return "Failed to fetch mangas: \(self.localizedDescription)"
+        }
+    }
+}
+
+
 enum shFilter : String ,CaseIterable{
     case topMangas = "Top mangas"
     case temas = "Temas"
     case demos = "Demographics"
-    case generes = "Generos"
+    case genres = "Generos"
 }

@@ -46,7 +46,6 @@ struct SearcheAndFilterBar: View {
         .background(Color.clear)
             
         }
-    
 }
 #Preview {
     SearcheAndFilterBar()

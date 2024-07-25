@@ -3,11 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		483837A72C25DB5A00799F9F /* ThemsComponet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483837A62C25DB5A00799F9F /* ThemsComponet.swift */; };
+		481C2E902C48667300AD5814 /* SearcheView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 481C2E8F2C48667300AD5814 /* SearcheView.swift */; };
+		483837A72C25DB5A00799F9F /* ThemesComponet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483837A62C25DB5A00799F9F /* ThemesComponet.swift */; };
 		483B61CA2C0799F3002A5F70 /* Proyecto_ACApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483B61C92C0799F3002A5F70 /* Proyecto_ACApp.swift */; };
 		483B61CC2C0799F3002A5F70 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483B61CB2C0799F3002A5F70 /* ContentView.swift */; };
 		483B61CE2C0799F6002A5F70 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 483B61CD2C0799F6002A5F70 /* Assets.xcassets */; };
@@ -28,12 +29,14 @@
 		48BEF2962C2C4A89006E2177 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BEF2952C2C4A89006E2177 /* LoginView.swift */; };
 		48BEF2982C2C4A9E006E2177 /* LoginVeiwModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BEF2972C2C4A9E006E2177 /* LoginVeiwModel.swift */; };
 		48BEF29A2C30B56B006E2177 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BEF2992C30B56B006E2177 /* Extensions.swift */; };
+		48C113A82C5191C8008AADCE /* MangaListComponet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C113A72C5191C8008AADCE /* MangaListComponet.swift */; };
 		48CD10812C335CF7009F56F4 /* ExtesionHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CD10802C335CF7009F56F4 /* ExtesionHomeView.swift */; };
 		48CD10842C355F64009F56F4 /* ListasSimples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CD10832C355F64009F56F4 /* ListasSimples.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		483837A62C25DB5A00799F9F /* ThemsComponet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemsComponet.swift; sourceTree = "<group>"; };
+		481C2E8F2C48667300AD5814 /* SearcheView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearcheView.swift; sourceTree = "<group>"; };
+		483837A62C25DB5A00799F9F /* ThemesComponet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesComponet.swift; sourceTree = "<group>"; };
 		483B61C62C0799F3002A5F70 /* Proyecto AC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Proyecto AC.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		483B61C92C0799F3002A5F70 /* Proyecto_ACApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Proyecto_ACApp.swift; sourceTree = "<group>"; };
 		483B61CB2C0799F3002A5F70 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -56,6 +59,7 @@
 		48BEF2952C2C4A89006E2177 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		48BEF2972C2C4A9E006E2177 /* LoginVeiwModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVeiwModel.swift; sourceTree = "<group>"; };
 		48BEF2992C30B56B006E2177 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		48C113A72C5191C8008AADCE /* MangaListComponet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaListComponet.swift; sourceTree = "<group>"; };
 		48CD10802C335CF7009F56F4 /* ExtesionHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtesionHomeView.swift; sourceTree = "<group>"; };
 		48CD10832C355F64009F56F4 /* ListasSimples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListasSimples.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -92,6 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				483B61C92C0799F3002A5F70 /* Proyecto_ACApp.swift */,
+				485D1BFA2C3C72B4004F6ABB /* TabBar.swift */,
 				483B61E02C0BB8B0002A5F70 /* App */,
 				48CD10822C33890F009F56F4 /* Extensiones */,
 				483B61E12C0BB8D6002A5F70 /* Data */,
@@ -100,7 +105,6 @@
 				483B61CD2C0799F6002A5F70 /* Assets.xcassets */,
 				483B61CF2C0799F6002A5F70 /* Proyecto_AC.entitlements */,
 				483B61D02C0799F6002A5F70 /* Preview Content */,
-				485D1BFA2C3C72B4004F6ABB /* TabBar.swift */,
 			);
 			path = "Proyecto AC";
 			sourceTree = "<group>";
@@ -152,6 +156,7 @@
 		485AD7152C1A5DE200F36677 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				48BEF2972C2C4A9E006E2177 /* LoginVeiwModel.swift */,
 				485AD7162C1A5E0E00F36677 /* MangasViewModel.swift */,
 				485AD71C2C1CF0E100F36677 /* ExtensionMangaViewModel.swift */,
 			);
@@ -173,8 +178,9 @@
 			isa = PBXGroup;
 			children = (
 				485AD71A2C1A856E00F36677 /* MangaComponet.swift */,
-				483837A62C25DB5A00799F9F /* ThemsComponet.swift */,
+				483837A62C25DB5A00799F9F /* ThemesComponet.swift */,
 				48CD10832C355F64009F56F4 /* ListasSimples.swift */,
+				48C113A72C5191C8008AADCE /* MangaListComponet.swift */,
 			);
 			path = componets;
 			sourceTree = "<group>";
@@ -200,7 +206,6 @@
 			isa = PBXGroup;
 			children = (
 				48BEF2952C2C4A89006E2177 /* LoginView.swift */,
-				48BEF2972C2C4A9E006E2177 /* LoginVeiwModel.swift */,
 			);
 			path = Accout;
 			sourceTree = "<group>";
@@ -208,6 +213,7 @@
 		485AD7232C1D1DEC00F36677 /* Buscador */ = {
 			isa = PBXGroup;
 			children = (
+				481C2E8F2C48667300AD5814 /* SearcheView.swift */,
 				485AD7242C1D1E1900F36677 /* filtro */,
 			);
 			path = Buscador;
@@ -266,7 +272,7 @@
 				};
 			};
 			buildConfigurationList = 483B61C12C0799F3002A5F70 /* Build configuration list for PBXProject "Proyecto AC" */;
-			compatibilityVersion = "Xcode 14.0";
+			compatibilityVersion = "Xcode 15.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -304,11 +310,13 @@
 				48BEF2982C2C4A9E006E2177 /* LoginVeiwModel.swift in Sources */,
 				483B61DC2C079D02002A5F70 /* NetworkProtocols.swift in Sources */,
 				48BEF2942C2B9B0A006E2177 /* HomeVeiw.swift in Sources */,
-				483837A72C25DB5A00799F9F /* ThemsComponet.swift in Sources */,
+				483837A72C25DB5A00799F9F /* ThemesComponet.swift in Sources */,
 				48CD10812C335CF7009F56F4 /* ExtesionHomeView.swift in Sources */,
 				483B61D92C079C17002A5F70 /* NetworkHelper.swift in Sources */,
 				48CD10842C355F64009F56F4 /* ListasSimples.swift in Sources */,
+				481C2E902C48667300AD5814 /* SearcheView.swift in Sources */,
 				485AD71B2C1A856E00F36677 /* MangaComponet.swift in Sources */,
+				48C113A82C5191C8008AADCE /* MangaListComponet.swift in Sources */,
 				485AD7172C1A5E0E00F36677 /* MangasViewModel.swift in Sources */,
 				485D1C012C3F1B25004F6ABB /* SearcheAndFilterBar.swift in Sources */,
 				485D1BFB2C3C72B4004F6ABB /* TabBar.swift in Sources */,

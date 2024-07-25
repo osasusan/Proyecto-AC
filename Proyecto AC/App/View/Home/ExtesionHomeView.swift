@@ -26,7 +26,7 @@ extension HomeVeiw{
        
         .onAppear{
             Task{
-                await vm.listMangas(page:1,11)
+                await vm.listMangas(page:page,11)
             }
         }
     }
@@ -48,10 +48,33 @@ extension HomeVeiw{
       
         .onAppear{
             Task{
-                await vm.listTopMangas(page: 1, 11)
+                await vm.listTopMangas(page: page, 11)
             }
         }
     }
+    func verDemos(content:String)->some View{
+       ScrollView(.horizontal,showsIndicators: false){
+           Divider()
+           HStack{
+               ForEach(vm.mangaListDemos, id: \.id) { item in
+                   NavigationLink {
+                       withAnimation(.smooth) {
+                           MangaDetailVeiw(manga: item)
+                       }
+                   } label: {
+                       MangaComponet(manga: item)
+                   }
+               }
+           }
+           .padding(.horizontal)
+       }
+      
+       .onAppear{
+           Task{
+               await vm.listMangaDemo(page:page,demos:content,11)
+           }
+       }
+   }
      func vermagaID(id:String)->some View{
         VStack{
             MangaDetailVeiw(manga: vm.mangasId)
