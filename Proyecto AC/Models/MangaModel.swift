@@ -10,7 +10,7 @@ import SwiftData
 
 struct MangasResponse: Codable {
     let metadata: Metadata?
-    let items: [Item]
+    let items: [Manga]
 }
 
 struct Demographic :Codable{
@@ -39,9 +39,11 @@ struct Metadata:Codable {
     let page: Int
     let total: Int
 }
-
-class Item : Codable{
-    
+struct APIErrorResponse:Codable {
+    let reason: String
+    let error: Bool
+}
+struct Manga : Codable{
     let background: String?
     let title: String
     let url: String?
@@ -60,34 +62,23 @@ class Item : Codable{
     let authors: [Author]?
     let endDate: String?
     let titleEnglish: String?
-    
-    init(background: String?, title: String, url: String?, demographics: [Demographic]?, themes: [Theme]?, score: Double?, volumes: Int?, titleJapanese: String?, sypnosis: String?, genres: [Genre]?, mainPicture: String?, startDate: String?, id: Int, status: String?, chapters: Int?, authors: [Author]?, endDate: String?, titleEnglish: String?) {
-        self.background = background
-        self.title = title
-        self.url = url
-        self.demographics = demographics
-        self.themes = themes
-        self.score = score
-        self.volumes = volumes
-        self.titleJapanese = titleJapanese
-        self.sypnosis = sypnosis
-        self.genres = genres
-        self.mainPicture = mainPicture
-        self.startDate = startDate
-        self.id = id
-        self.status = status
-        self.chapters = chapters
-        self.authors = authors
-        self.endDate = endDate
-        self.titleEnglish = titleEnglish
-    }
-    
-   
-    
 }
-struct ItemsResponse :Codable{
-    let items : [Item]
+
+struct User: Codable {
+    let id: String
 }
+
+// MARK: - UserCollection
+struct UserCollection: Codable {
+    let readingVolume: Int
+    let user: User
+    let completeCollection: Bool
+    let id: String
+    let manga: Manga
+    let volumesOwned: [Int]
+}
+
+
 
 
 

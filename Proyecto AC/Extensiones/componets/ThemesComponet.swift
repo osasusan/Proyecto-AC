@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ThemesComponet: View {
     @State var theme: String = "hola que tal "
-    @State var num : Int
+  
 //    @EnvironmentObject var vm : MangasViewModel
     var body: some View {
        
@@ -21,7 +21,7 @@ struct ThemesComponet: View {
                 .foregroundStyle(.gray)
                 .overlay{
                     VStack(alignment: .center){
-                        Text(theme )
+                        Text(theme)
                             .lineLimit(2)
                             .font(.title2)
                             .fontWidth(.compressed)
@@ -37,5 +37,5 @@ struct ThemesComponet: View {
 
 
 #Preview {
-    ThemesComponet( num: 1)
+    ThemesComponet()
 }

@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+@MainActor
 struct HomeVeiw: View {
 //    @EnvironmentObject var vm : MangasViewModel
    @State var vm = MangasViewModel()
@@ -30,14 +30,14 @@ struct HomeVeiw: View {
                             }
                         }
                     VStack(alignment:.leading,spacing:3){
-                        sectorView(titulo: "Top mangas",destino:TopMangasView())
+                        sectorView(titulo: "Top mangas",destino:ViewMangas(num: 1))
                         verTop10()
-                        sectorView(titulo: "Mangas", destino: allMnagas())
+                        sectorView(titulo: "Mangas", destino: ViewMangas(num: 2))
                         verMangas()
-                        sectorView(titulo:"Shounene", destino: listMagaGenDemoTheme( contetn: "Shounen",num: 3))
+                        sectorView(titulo:"Shounen", destino: ViewMangas(conten: "Shounen", num: 5))
                         verDemos(content: "Shounen")
                         
-                        //                        vermagaID(id: "23")
+//                                            vermagaID(id: "23")
                     }
                 }
             }
@@ -46,7 +46,7 @@ struct HomeVeiw: View {
 }
 #Preview {
     HomeVeiw()
-//       .environment(MangasViewModel())
+       .environment(MangasViewModel())
         
 }
 

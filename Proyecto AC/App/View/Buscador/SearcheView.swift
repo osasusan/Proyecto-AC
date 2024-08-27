@@ -16,7 +16,14 @@ struct SearcheView: View {
     //   @EnvironmentObject private var vm : MangasViewModel
     //    @State private var vm = MangasViewModel()
     @Environment(MangasViewModel.self) private var vm
+    @State private var filter : shFilter = .begins
     @State var buscar : String = ""
+    @State var toggel : Bool = false
+    @State private var navigationToResult = false
+    @State private var navigationToIdResult = false
+    @State private var navigationToLsitAuthor = false
+    @State private var num :Int = 0
+    @State private var editTesxEmpty = false
     @Binding var show : Bool
     var body: some View {
         if show{
@@ -26,7 +33,6 @@ struct SearcheView: View {
                         withAnimation(.smooth){
                             show.toggle()
                         }
-                        
                     }label:{
                         Image(systemName: "xmark.circle.fill")
                             .resizable()
@@ -36,24 +42,96 @@ struct SearcheView: View {
                         .frame(width: 350,height: 60)
                         .foregroundStyle(.gray)
                         .overlay {
-                            
-                            TextField("Search manga",text: $buscar)
-                                .font(.title2)
-                                .padding(.horizontal)
+                            HStack{
+                                Picker("selec filter", selection: $filter) {
+                                    ForEach(shFilter.allCases){option in
+                                        Text(option.rawValue).tag(option)
+                                    }
+                                }
+                                .pickerStyle(.menu)
+                                .onChange(of: filter) {
+                                    buscar = ""
+                                    dismissKeyboard()
+                                }
+                                TextField("Search manga",text: $buscar)
+                                    .font(.title2)
+                                    .padding(.horizontal)
+                                    .textCase(.lowercase)
+                                    .keyboardType(chnageKeyBoartFilter())
+                            }
+                            Spacer()
                         }
+                    VStack(alignment:.center){
+                        Button {
+                            if !buscar.isEmpty {
+                                if filter != .id {
+                                    if filter == .begins{
+                                        num = 6
+                                        navigationToResult = true
+                                    }else if filter == .contains{
+                                        num = 7
+                                        navigationToResult = true
+                                    }else{
+                                        navigationToLsitAuthor = true
+                                    }
+                                }else{
+                                    Task{
+                                        await vm.getIdManga(id: buscar)
+                                    }
+                                    navigationToIdResult = true
+                                }
+                               
+                            }else{
+                                editTesxEmpty.toggle()
+                            }
+                            dismissKeyboard()
+                            
+                        } label: {
+                            Text("Search")
+                                .tint(.white)
+                                .frame(width: 100,height: 40)
+                                .background(.blue)
+                                .clipShape(Capsule(style: .continuous))
+                        }
+                        .padding(.top,15)
+                                            }
+                    .frame(maxWidth: .infinity)
+                    
                     
                     trustInfo2(camp: "Genres", num: 1 )
-                    
                     trustInfo2(camp: "Themes", num: 2 )
                     trustInfo2(camp: "Demographics", num: 3 )
                     
                     Spacer()
                 }
                 .frame(width:350)
+                .navigationDestination( isPresented: $navigationToResult){
+                    ViewMangas(conten: buscar,num: num)}
+                .navigationDestination(isPresented:$navigationToIdResult){
+                    MangarIdResulr(buscar: buscar)}
+                .navigationDestination(isPresented: $navigationToLsitAuthor){
+                    AuthorListName(autorTosearch: buscar)
+                }
+                .alert(isPresented: $editTesxEmpty){
+                    .init(title: Text("ERROR"),message: Text("You can't make a empty search"),dismissButton: .cancel())
+                }
+
             }
         }
     }
-    
+    private func chnageKeyBoartFilter() -> UIKeyboardType{
+        switch filter {
+            case .contains:
+                return .default
+            case .begins:
+                return .default
+            case .id:
+                return .numberPad
+            case .author:
+                return .emailAddress
+           
+        }
+    }
 }
 struct trustInfo2 :View{
     var camp:String
@@ -67,8 +145,7 @@ struct trustInfo2 :View{
                 }
             }label: {
                 HStack{
-                    Image(systemName: "lock")
-                        .foregroundColor(.primary)
+                    
                     Text(camp)
                         .font(.title2.weight(.semibold))
                         .foregroundStyle(Color.primary)
@@ -87,13 +164,12 @@ struct trustInfo2 :View{
                 ZStack{
                     Color.gray.opacity(0.3)
                     VStack(alignment: .leading, spacing: 0) {
-                        listaTemas(nume: num)
+                        ListaTemas(nume: num)
                             .font(.headline)
                             .fontWidth(.compressed)
                     }
                     
                     .frame(maxWidth: .infinity,maxHeight: .infinity, alignment: .leading)
-                    
                     
                     .padding()
                 }

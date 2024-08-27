@@ -1,4 +1,4 @@
-	//
+//
 //  TabBar.swift
 //  Proyecto AC
 //
@@ -8,12 +8,15 @@
 import SwiftUI
 
 struct TabBar: View {
-    
+    @Environment(LogViewModel.self) private var vm
+    //    @State var log : any View
     @SceneStorage("tab")
+    
     var tab = Tab.home
     var body: some View {
-        
+     
         NavigationStack{
+            
             ZStack{
                 TabView(selection: $tab){
                     HomeVeiw()
@@ -23,15 +26,23 @@ struct TabBar: View {
                     FavoritesVeiw()
                         .tabItem {Label( "Favorites",systemImage: "star.fill")}
                         .tag(Tab.favorites)
-                    LoginView()
+//                    Group{
+//                        if vm.isLogede {
+//                            UserView()
+//                        }else{
+//                            LoginView()
+//                        }
+//                    }
+                    AccountView()
                         .tabItem {Label("Acaunt",systemImage: "person")}
-                        .tag(Tab.acaut)
+                    .   tag(Tab.acaut)
                 }
                 
             }
         }
     }
 }
+
 enum Tab : String {
     case home
     case favorites
@@ -41,4 +52,5 @@ enum Tab : String {
 #Preview {
     TabBar()
         .environment(MangasViewModel())
+        .environment(LogViewModel())
 }

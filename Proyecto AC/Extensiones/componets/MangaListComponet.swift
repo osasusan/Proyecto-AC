@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MangaListComponet: View {
-    @State var manga:Item?
+    @State var manga:Manga?
     var body: some View {
         
         VStack(spacing:10){

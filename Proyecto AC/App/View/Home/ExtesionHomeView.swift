@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+@MainActor
 extension HomeVeiw{
      func verMangas()->some View{
         ScrollView(.horizontal,showsIndicators: false){
@@ -75,9 +76,9 @@ extension HomeVeiw{
            }
        }
    }
-     func vermagaID(id:String)->some View{
+    public func vermagaID(id:String)->some View{
         VStack{
-            MangaDetailVeiw(manga: vm.mangasId)
+            MangaComponetDetalle(manga: vm.mangasId)
         }
         .onAppear(){
             Task {

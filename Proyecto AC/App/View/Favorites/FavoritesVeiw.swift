@@ -12,53 +12,72 @@ struct FavoritesVeiw: View {
     
     //    @State private var vm = MangasViewModel()
     @Environment(MangasViewModel.self) private var vm
+    @Environment(LogViewModel.self) private var vmLog
+    @State var logView = false
     
     var body: some View {
         
         ZStack{
             Color.customColor.ignoresSafeArea()
-            if !vm.favorites.isEmpty{
-                List{
-                    Section("Favorites"){
-                        
-                        ForEach(vm.favorites,id:\.id){fav in
-                            NavigationLink {
-                                withAnimation() {
-                                    MangaDetailVeiw(manga: fav)
-                                }
-                                
-                                
-                            } label: {
-                                MangaListComponet(manga: fav)
-                                
-                                    .swipeActions(edge: .leading){
-                                        Button {
-                                            withAnimation(.snappy){
-                                                vm.toggleMangaSelection(fav)
-                                            }
-                                        }label: {
-                                            Label("Delate", systemImage: "trash.fill")
-                                        }
-                                        .tint(.red)
+            if vmLog.isLogede {
+                if !vm.favorites.isEmpty{
+                    List{
+                        Section("Favorites"){
+                            
+                            ForEach(vm.favorites,id:\.id){fav in
+                                NavigationLink {
+                                    withAnimation() {
+                                        MangaDetailVeiw(manga: fav)
                                     }
+                                    
+                                    
+                                } label: {
+                                    MangaListComponet(manga: fav)
+                                    
+                                        .swipeActions(edge: .leading){
+                                            Button {
+                                                withAnimation(.snappy){
+                                                    vm.toggleMangaSelection(fav)
+                                                }
+                                            }label: {
+                                                Label("Delate", systemImage: "trash.fill")
+                                            }
+                                            .tint(.red)
+                                        }
+                                }
                             }
+                            
                         }
                         
                     }
-                    
+                    .padding()
+                    .transparentListStyle()
+                }else{
+                    VStack(alignment : .center){
+                        Text("Your favorites list is empty")
+                            .font(.title)
+                            .fontWeight(.bold)
+                            .fontWidth(.compressed)
+                    }
                 }
-                .padding()
-                .transparentListStyle()
             }else{
-                VStack{
-                    Text("Your favorites list is empty")
+                VStack(alignment : .center){
+                    Text("You need to log in to see your favorite mangas")
                         .font(.title)
                         .fontWeight(.bold)
                         .fontWidth(.compressed)
+                        
+                }
+                .onAppear{
+                    logView.toggle()
                 }
             }
         }
+        .sheet(isPresented: $logView, content: {
+            LoginView()
+        })
     }
+        
 }
 struct TransparentListStyle: ViewModifier {
     func body(content: Content) -> some View {

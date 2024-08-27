@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MangaComponet: View {
     
-    @State var manga : Item?
+    @State var manga : Manga?
     var body: some View {
         VStack(spacing:3){
             LazyVStack{
@@ -48,8 +48,10 @@ struct MangaComponet: View {
 struct MangaComponetDetalle:View{
     //    @State private var vm = MangasViewModel()
     @Environment(MangasViewModel.self) private var vm
-    @State var manga:Item?
-    let manga2 = Item(background: "prueba", title: "prueba", url: nil, demographics: [], themes: [], score: 0.00, volumes: 1, titleJapanese: "prueba", sypnosis: "prueba", genres: [], mainPicture: nil, startDate: nil, id: 788989, status: "prueba", chapters: 2, authors: [], endDate: nil, titleEnglish: "prueba")
+    @Environment(LogViewModel.self) private var viewModel
+    
+    @State var manga:Manga?
+    @State var manga2 = Manga(background: "prueba", title: "prueba", url: nil, demographics: [], themes: [], score: 0.00, volumes: 1, titleJapanese: "prueba", sypnosis: "prueba", genres: [], mainPicture: nil, startDate: nil, id: 788989, status: "prueba", chapters: 2, authors: [], endDate: nil, titleEnglish: "prueba")
     @State var favsi :Bool = false
     var body: some View {
         
@@ -57,43 +59,47 @@ struct MangaComponetDetalle:View{
             HStack(alignment: .center){
                 imageAsync(imagen: manga?.mainPicture ?? "nil", width: 150, height: 240,radio: 20)
                 
-                HStack(alignment: .bottom){
-                    VStack(alignment:.leading) {
-                        VStack{
-                            Text(manga?.title ?? "Error")
-                                .font(.title3)
-                                .lineLimit(4)
-                                .fontWeight(.semibold)
-                                .fontWidth(.compressed)
-                                .foregroundStyle(.white)
-                                .frame(maxWidth: .infinity,alignment: .topLeading)
-                            
-                        }
-                        Spacer()
-                        Text("\(manga?.authors?.first?.firstName ?? "4") \(manga?.authors?.first?.lastName ?? "3")")
+                
+                VStack(alignment:.leading) {
+                    
+                    Text(manga?.title ?? "Error ")
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                        .fontWidth(.compressed)
+                        .tint(.white)
+                        .lineLimit(4)
+                        
+                    
+                    Text("id:\(manga?.id ?? 0)")
+                        .font(.footnote)
+                        .fontWeight(.bold)
+                        .fontWidth(.compressed)
+                    
+                    
+                    Spacer()
+                    Text("\(manga?.authors?.first?.firstName ?? "4") \(manga?.authors?.first?.lastName ?? "3")")
+                        .font(.footnote)
+                        .fontWeight(.light)
+                        .fontWidth(.compressed)
+                        .foregroundStyle(.white)
+                    
+                    HStack{
+                        
+                        Text(unixToDate(date: manga?.startDate ?? "fecha de inicio sin definir"))
                             .font(.footnote)
                             .fontWeight(.light)
                             .fontWidth(.compressed)
                             .foregroundStyle(.white)
                         
-                        HStack{
-                            
-                            Text(unixToDate(date: manga?.startDate ?? "fecha de inicio sin definir"))
-                                .font(.footnote)
-                                .fontWeight(.light)
-                                .fontWidth(.compressed)
-                                .foregroundStyle(.white)
-                            
-                            Spacer()
-                            Text(String(format: "%.2f",manga?.score ?? 0.0))
-                                .font(.footnote)
-                                .foregroundStyle(.white)
-                            // boton el cuan te saca un desplegable donde lo puedes añadir a una favoritos o a una collecion
-                            
+                        Spacer()
+                        Text(String(format: "%.2f",manga?.score ?? 0.0))
+                            .font(.footnote)
+                            .foregroundStyle(.white)
+                        
+                        if viewModel.isLogede == true{
                             Button{
-                                //                                manga?.favorites = favsi.toggle()
                                 favsi.toggle()
-                                vm.toggleMangaSelection(manga ?? manga2)
+                                vm.toggleMangaSelection(manga!)
                             }label: {
                                 
                                 let image = favsi ? Image(systemName: "star.fill"): Image(systemName: "star")
@@ -106,6 +112,7 @@ struct MangaComponetDetalle:View{
                         }
                     }
                 }
+                
             }
             Divider()
         }
@@ -113,26 +120,90 @@ struct MangaComponetDetalle:View{
         .padding()
         .onAppear{
             Task{
-                comprovationFav(manga ?? manga2 )
+                comprovationFav(manga ?? manga2)
             }
         }
     }
-    func comprovationFav(_ manga: Item){
+    func comprovationFav(_ manga: Manga){
         if (vm.favorites.firstIndex(where: { $0.id == manga.id }) != nil) {
             favsi = true
         }
     }
 }
-
+struct UserCollectionView :View{
+    @State var manga:UserCollection?
+    @State var favsi :Bool = false
+    var body: some View {
+        
+        VStack(spacing:10){
+            HStack(alignment: .center){
+                imageAsync(imagen: manga?.manga.mainPicture ?? "nil", width: 150, height: 240,radio: 20)
+                
+                HStack(alignment: .bottom){
+                    VStack(alignment:.leading) {
+                        
+                        Text(manga?.manga.title ?? "Error")
+                            .font(.title3)
+                            .lineLimit(4)
+                            .fontWeight(.semibold)
+                            .fontWidth(.compressed)
+                            .foregroundStyle(.white)
+                            .frame(maxWidth: .infinity,alignment: .topLeading)
+                        Text("id:\(manga?.manga.id ?? 0)")
+                            .font(.footnote)
+                            .fontWeight(.bold)
+                            .fontWidth(.compressed)
+                        Spacer()
+                        Text("\(manga?.manga.authors?.first?.firstName ?? "4") \(manga?.manga.authors?.first?.lastName ?? "3")")
+                            .font(.footnote)
+                            .fontWeight(.light)
+                            .fontWidth(.compressed)
+                            .foregroundStyle(.white)
+                        
+                        HStack{
+                            
+                            Text(unixToDate(date: manga?.manga.startDate ?? "fecha de inicio sin definir"))
+                                .font(.footnote)
+                                .fontWeight(.light)
+                                .fontWidth(.compressed)
+                                .foregroundStyle(.white)
+                            
+                            Spacer()
+                            Text(String(format: "%.2f",manga?.manga.score ?? 0.0))
+                                .font(.footnote)
+                                .foregroundStyle(.white)
+                            
+                            
+                            
+                        }
+                    }
+                }
+            }
+            Divider()
+        }
+        .frame(height: 230)
+        .padding()
+    }
+}
 struct MangaDetailVeiw :View {
-    @State var manga:Item?
+    @State var manga:Manga?
     var notAvailable = "Data is not available"
     
     var body: some View{
         ScrollView{
             VStack{
                 imageAsync(imagen: manga?.mainPicture ?? "nil",width:360,height: 600,radio: 0)
-                mangaName(mangaName: manga?.title ?? "manga sin Nombre" , width: 330)
+                HStack(spacing: -20){
+                    
+                    mangaName(mangaName: manga?.title ?? "manga sin Nombre" , width: 330)
+                        .lineLimit(3)
+                    
+                    Text((String(format: "%.2f",manga?.score ?? 0.0)))
+                        .font(.headline )
+                        .fontWidth(.compressed)
+                        .padding(.leading,20)
+                    
+                }
                 trustInfo(camp: "Synopsis", manga:manga?.sypnosis ?? notAvailable )
                 trustInfo(camp: "Background", manga:manga?.background ?? notAvailable )
                 trustInfo(camp: "Volumens", manga:"\(String(describing: manga?.volumes?.description ?? notAvailable))")
@@ -210,21 +281,40 @@ struct trustInfo :View{
     ZStack{
         Color.customColor
             .ignoresSafeArea()
-        MangaComponet(manga: nil)
+        MangaComponet()
+    }
+}
+#Preview("MangaCellComponet") {
+    ZStack{
+        Color.customColor
+            .ignoresSafeArea()
+        MangaComponetDetalle()
+            .environment(MangasViewModel())
+            .environment(LogViewModel())
+    }
+}
+#Preview ("UserColectionView"){
+    ZStack{
+        Color.customColor
+            .ignoresSafeArea()
+        UserCollectionView()
     }
 }
 #Preview("MangaComponetDetalle"){
     ZStack{
         Color.customColor
             .ignoresSafeArea()
-        MangaComponetDetalle()
+        MangaComponetDetalle(manga: Manga(background: "prueba", title: "prueba", url: nil, demographics: [], themes: [], score: 0.00, volumes: 1, titleJapanese: "prueba", sypnosis: "prueba", genres: [], mainPicture: nil, startDate: nil, id: 788989, status: "prueba", chapters: 2, authors: [], endDate: nil, titleEnglish: "prueba"))
             .environment(MangasViewModel())
+            .environment(LogViewModel())
+            .environment(UserViewModel())
+        
     }
 }
 #Preview("MangaDetailVeiw"){
     ZStack{
         Color.customColor
             .ignoresSafeArea()
-        MangaDetailVeiw(manga: nil)
+        MangaDetailVeiw()
     }
 }

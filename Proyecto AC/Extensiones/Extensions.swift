@@ -11,22 +11,24 @@ import SwiftUI
 
 
 extension URL{
-//    mangas
+    //    mangas
     static var URLMangas :URL{return URL(string:"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/list/mangas")!}
     static var URLTopMangas:URL {return URL(string:"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/list/bestMangas")!}
     
-  // temas
+    // temas
     static var URLThemes:URL { return URL(string:"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/list/themes")!}
     static var URLMagasThemes:URL { return URL(string:"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/list/mangaByTheme/")!}
     
-//    Autro
+    //    Autor
     static var URLAutor:URL { return URL(string:"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/list/authors")!}
-    static var URLMangaAuthor:URL {return URL(string:"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/list/mangaByAuthor/998C1B16-E3DB-47D1-8157-8389B5345D03")!}
-//    Generos
+    static var URLMangaAuthor:URL {return URL(string:"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/list/mangaByAuthor/")!}
+    static var URLSearchAuthor:URL {return URL(string:"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/search/author/")!}
+    
+    //    Generos
     static var URLGens:URL { return URL( string:"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/list/genres")!}
     static var URLGenresMangaList:URL {return URL(string:"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/list/mangaByGenre/")!}
-
-//    Demografia
+    
+    //    Demografia
     static var URLDemosMangaList:URL {return URL(string:"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/list/mangaByDemographic/")!}
     static var URLDemos:URL { return URL(string:"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/list/demographics")!}
     
@@ -35,10 +37,23 @@ extension URL{
     static var URLmangaContais:URL {return URL(string:"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/search/mangasContains/")!}
     static var URLMangasID:URL {return URL(string:"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/search/manga/")!}
     
+    //inicio y creacion de cuenta
+    
     static var URLLogin:URL {return URL(string:"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/users/login")!}
-  
+    static var URLCreateAccout:URL {return URL(string:"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/users")!}
+    
+    // peticiones de usuario
+    
+    static var URLReToken:URL { return URL(string :"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/users/renew")!}
+    static var URLNewCollection:URL { return URL(string :"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/collection/manga")!}
+    static var URLUserCollection:URL { return URL(string :"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/collection/manga")!}
+    static var URLUserCollectionID:URL { return URL(string :"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/collection/manga/")!}
+    static var URLDelateCollectionID:URL { return URL(string :"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/collection/manga/")!}
+    
+    
     
     static func PutContet(url:URL ,content: String) -> URL{
+        
         return  url.appendingPathComponent(content)
     }
     static func URLPagesChange(url: URL,page: Int,per:Int?) -> URL{
@@ -72,6 +87,7 @@ func unixToDate(date: String) -> String {
     return date
     
 }
+
 extension View{
     func mangaName(mangaName:String,width:CGFloat)->some View{
         Text(mangaName)
@@ -90,12 +106,10 @@ extension View{
                         ProgressView()
                     case .success(let image):
                         image.resizable()
-                            
                             .clipShape(RoundedRectangle(cornerRadius: radio))
                             .frame(width: width, height: height)
                     case .failure:
                         Image(systemName: "photo")
-                            
                             .resizable()
                             .clipShape(RoundedRectangle(cornerRadius: radio))
                             .frame(width: width, height: height)
@@ -107,7 +121,7 @@ extension View{
     }
     
     //limpiar url de la Imgen
-     func cleanUrl(_ urlString: String) -> String {
+    func cleanUrl(_ urlString: String) -> String {
         var cleanedUrl = urlString.trimmingCharacters(in: .whitespacesAndNewlines)
         cleanedUrl = cleanedUrl.replacingOccurrences(of: "\"", with: "")
         return cleanedUrl
@@ -115,6 +129,9 @@ extension View{
     func transparentListStyle() -> some View {
         self.modifier(TransparentListStyle())
     }
+    func dismissKeyboard() {
+           UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+       }
 }
 //MARK: Color priopio
 extension Color{
@@ -125,17 +142,22 @@ extension Color{
 extension Error{
     func onErrorResposnse() -> String{
         if let errors = self as? NetworkError.networkErrorEnum {
-            return "Failed to fetch mangas: \(errors.customLocalizedDescription)"
+            return "Error: \(errors.customLocalizedDescription)"
         }else{
-            return "Failed to fetch mangas: \(self.localizedDescription)"
+            return "Error: \(self.localizedDescription)"
         }
     }
 }
 
 
-enum shFilter : String ,CaseIterable{
-    case topMangas = "Top mangas"
-    case temas = "Temas"
-    case demos = "Demographics"
-    case genres = "Generos"
+enum shFilter : String ,CaseIterable,Identifiable{
+   
+    case contains = "Contains"
+    case begins = "Begins "
+    case id = "  ID   "
+    case author = "Author"
+   
+    
+    var id :String { self.rawValue }
 }
+

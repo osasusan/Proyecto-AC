@@ -21,16 +21,14 @@ struct SearcheAndFilterBar: View {
                         .foregroundStyle(.gray)
                 }
                 Spacer()
-                
+            
                 Button {
                     
                 } label: {
                     Image(systemName: "line.3.horizontal.decrease.circle")
                         .foregroundStyle(.black)
                 }
-                
             }
-            
             .padding(.horizontal,8)
             .padding(.vertical,5)
             .overlay{
@@ -39,7 +37,6 @@ struct SearcheAndFilterBar: View {
                     .foregroundStyle(Color(.systemGray4))
                     .shadow(color: .black.opacity(0.6), radius:3)
             }
-            
             
             .padding(.horizontal,16)
         }

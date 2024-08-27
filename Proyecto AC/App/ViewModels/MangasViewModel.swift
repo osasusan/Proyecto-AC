@@ -9,19 +9,21 @@ import Foundation
 
 
 @Observable class MangasViewModel{
-    var topMangas: [Item] = []
-    var favorites: [Item] = []
-    var allMangas: [Item] = []
-    var contenSh: [Item] = []
-    var contenBg:[Item] = []
-    var mangasId: Item!
+    var topMangas: [Manga] = []
+    var favorites: [Manga] = []
+    var allMangas: [Manga] = []
+    var contenSh: [Manga] = []
+    var contenBg:[Manga] = []
+    var mangasId: Manga!
     var themes : [String] = []
-    var mangaListThemes : [Item] = []
-    var mangaListGen : [Item] = []
-    var mangaListDemos : [Item] = []
+    var mangaListThemes : [Manga] = []
+    var mangaListGen : [Manga] = []
+    var mangaListDemos : [Manga] = []
     var author : [Author] = []
+    var shAuthor : [Author] = []
+    var authorManga : [Manga] = []
     var generos : [String] = []
-    var listaGenerosMnaga : [Item] = []
+    var listaGenerosMnaga : [Manga] = []
     var demos : [String] = []
     var metadata: Metadata?
     var errorMensage: String?
@@ -39,9 +41,10 @@ import Foundation
     // respuesta de listado de todos los mangas.
     func listMangas(page:Int , _ per: Int) async {
         do {
-            let response = try await fetchMangas(pages: page, per)
+            let response = try await allamngaList(pages: page, per)
             self.allMangas = response.items
             self.metadata = response.metadata
+            errorMensage = nil
             // Mensage de error custom
         } catch{
             errorMensage = error.onErrorResposnse()
@@ -54,7 +57,7 @@ import Foundation
             
             self.topMangas = response.items
             self.metadata = response.metadata
-            // Mensage de error custom
+            errorMensage = nil
         } catch{
             errorMensage = error.onErrorResposnse()
         }
@@ -67,6 +70,7 @@ import Foundation
             
             self.mangaListGen = response.items
             self.metadata = response.metadata
+            errorMensage = nil
             // Mensage de error custom
         } catch{
             errorMensage = error.onErrorResposnse()
@@ -79,6 +83,7 @@ import Foundation
             
             self.mangaListThemes = response.items
             self.metadata = response.metadata
+            errorMensage = nil
             // Mensage de error custom
         } catch{
             errorMensage = error.onErrorResposnse()
@@ -92,6 +97,7 @@ import Foundation
             
             self.mangaListDemos = response.items
             self.metadata = response.metadata
+            errorMensage = nil
             // Mensage de error custom
         } catch{
             errorMensage = error.onErrorResposnse()
@@ -103,6 +109,7 @@ import Foundation
         do {
             self.generos = try await getGenres()
             //            print(generos)
+            errorMensage = nil
         } catch{
             errorMensage = error.onErrorResposnse()
         }
@@ -112,6 +119,7 @@ import Foundation
         do {
             self.themes = try await getThemes()
             //            print(themes)
+            errorMensage = nil
         } catch{
             errorMensage = error.onErrorResposnse()
         }
@@ -121,6 +129,7 @@ import Foundation
         do {
             self.demos = try await getDemos()
             //            print(demos)
+            errorMensage = nil
         } catch{
             errorMensage = error.onErrorResposnse()
         }
@@ -129,6 +138,17 @@ import Foundation
     func getAutor() async {
         do{
             self.author = try await getAuthor()
+            errorMensage = nil
+        } catch{
+            errorMensage = error.onErrorResposnse()
+        }
+    }
+    func getAutorManga(pages:Int,idAuthor:String) async {
+        do{
+            let response = try await getMangasAuhtor(pages: pages, author: idAuthor, 20)
+            self.authorManga = response.items
+            self.metadata = response.metadata
+            errorMensage = nil
         } catch{
             errorMensage = error.onErrorResposnse()
         }
@@ -140,7 +160,7 @@ import Foundation
     func getIdManga(id : String) async {
         do{
             self.mangasId = try await getMangaID(id: id)
-            
+            errorMensage = nil
         } catch{
             errorMensage = error.onErrorResposnse()
         }
@@ -151,6 +171,7 @@ import Foundation
             let response = try await mangaContais(conten: conten, pages: page,20)
             self.contenSh = response.items
             self.metadata = response.metadata
+            errorMensage = nil
             // Mensage de error custom
         } catch{
             errorMensage = error.onErrorResposnse()
@@ -162,8 +183,16 @@ import Foundation
         do {
             let response = try await mangaBegings(conten: conten)
             self.contenBg = response
-            
+            errorMensage = nil
         } catch{
+            errorMensage = error.onErrorResposnse()
+        }
+    }
+    func sharchAuthor(content:String) async{
+        do{
+            self.shAuthor = try await authorSearch(content: content)
+            errorMensage = nil
+        }catch{
             errorMensage = error.onErrorResposnse()
         }
     }
@@ -171,9 +200,9 @@ import Foundation
     //    MARK: PETICIONES API MANGAS
     
     //     Listado de mangas general
-    private func fetchMangas(pages:Int ,_ per:Int) async throws -> MangasResponse{
+    private func allamngaList(pages:Int ,_ per:Int) async throws -> MangasResponse{
         let url = URL.URLPagesChange(url: URL.URLMangas, page: pages, per: per)
-        let (data, response) = try await sareed.requiesProvider(false, url: url ,type: .GET, params: nil,nil,nil)
+        let (data, response) = try await sareed.requiesProvider( url: url ,type: .GET, params: nil)
         
         guard let httpResponse = response as? HTTPURLResponse,
               httpResponse.statusCode == 200 else{
@@ -194,9 +223,8 @@ import Foundation
     // Listado de Top mangas
     private func topMangas(pages: Int,_ numero:Int) async throws -> MangasResponse {
         
-        let url = URL.URLPagesChange(url: URL.URLTopMangas,page:pages, per:numero )
-        
-        let (data , respose) = try await sareed.requiesProvider(false, url: url, type: .GET, params: nil,nil,nil)
+        let url = URL.URLPagesChange(url: URL.URLTopMangas,page:pages, per:numero)
+        let (data , respose) = try await sareed.requiesProvider( url: url, type: .GET, params: nil)
         
         guard let httpRespose = respose as? HTTPURLResponse, httpRespose.statusCode == 200 else {
             throw NetworkError.networkErrorEnum.badRequest
@@ -204,12 +232,10 @@ import Foundation
         JSONDecoder().keyDecodingStrategy = .convertFromSnakeCase
         do{
             let response = try JSONDecoder().decode(MangasResponse.self, from: data)
-            //            print(response)
+           
             return response
         }catch{
-            print("Error decoding JSON: \(NetworkError.networkErrorEnum.badRequest)")
-            print(error.localizedDescription)
-            throw NetworkError.networkErrorEnum.badRequest
+            throw error
         }
     }
     //     Listado de generos de manga
@@ -218,7 +244,7 @@ import Foundation
         let url = URL.URLGenresMangaList
         let urlFinal = URL.ContetPages(url: url, contenido: gen, pages: page, por:per)
         
-        let (data , respose) = try await sareed.requiesProvider(false, url:urlFinal, type: .GET, params: nil,nil,nil)
+        let (data , respose) = try await sareed.requiesProvider(url:urlFinal, type: .GET, params: nil)
         
         guard let httpRespose = respose as? HTTPURLResponse, httpRespose.statusCode == 200 else {
             throw NetworkError.networkErrorEnum.badRequest
@@ -231,13 +257,13 @@ import Foundation
         }catch{
             print("Error decoding JSON: \(NetworkError.networkErrorEnum.badRequest)")
             print(error.localizedDescription)
-            throw NetworkError.networkErrorEnum.badRequest
+            throw error
         }
     }
     //     Listado de Generos
     private func getGenres() async throws -> [String] {
         do{
-            let (data , response) = try await sareed.requiesProvider(false, url: URL.URLGens, type: .GET, params: nil,nil,nil)
+            let (data , response) = try await sareed.requiesProvider(url: URL.URLGens, type: .GET, params: nil)
             guard let httpRespose = response as? HTTPURLResponse, httpRespose.statusCode == 200 else {
                 throw NetworkError.networkErrorEnum.badRequest
             }
@@ -260,8 +286,7 @@ import Foundation
     private func getThemes() async throws -> [String] {
         
         do{
-            
-            let (data , response) = try await sareed.requiesProvider(false, url: URL.URLThemes, type: .GET, params: nil,nil,nil)
+            let (data , response) = try await sareed.requiesProvider( url: URL.URLThemes, type: .GET, params: nil)
             guard let httpRespose = response as? HTTPURLResponse, httpRespose.statusCode == 200 else {
                 throw NetworkError.networkErrorEnum.badRequest
             }
@@ -283,7 +308,7 @@ import Foundation
     // listado de magas de tema
     private func getMangaTheme(pages: Int,theme:String) async throws -> MangasResponse{
         let url = URL.ContetPages(url: URL.URLMagasThemes, contenido: theme, pages: pages, por: 20)
-        let (data , respose) = try await sareed.requiesProvider(false, url:url, type: .GET, params: nil,nil,nil)
+        let (data , respose) = try await sareed.requiesProvider( url:url, type: .GET, params: nil)
         
         guard let httpRespose = respose as? HTTPURLResponse, httpRespose.statusCode == 200 else {
             throw NetworkError.networkErrorEnum.badRequest
@@ -304,7 +329,7 @@ import Foundation
         
         let urL = URL.URLDemosMangaList
         let funalURl = URL.ContetPages(url: urL, contenido: gen, pages:pages, por:per  )
-        let (data , respose) = try await sareed.requiesProvider(false, url: funalURl, type: .GET, params: nil,nil,nil)
+        let (data , respose) = try await sareed.requiesProvider( url: funalURl, type: .GET, params: nil)
         
         guard let httpRespose = respose as? HTTPURLResponse, httpRespose.statusCode == 200 else {
             throw NetworkError.networkErrorEnum.badRequest
@@ -324,7 +349,7 @@ import Foundation
     private func getDemos() async throws -> [String] {
         
         do{
-            let (data , response) = try await sareed.requiesProvider(false, url: URL.URLDemos, type: .GET, params: nil,nil,nil)
+            let (data , response) = try await sareed.requiesProvider( url: URL.URLDemos, type: .GET, params: nil)
             guard let httpRespose = response as? HTTPURLResponse, httpRespose.statusCode == 200 else {
                 throw NetworkError.networkErrorEnum.badRequest
             }
@@ -346,7 +371,7 @@ import Foundation
     //Listado de Autores
     private func getAuthor() async throws -> [Author] {
         do{
-            let (data, response) = try await NetworkHelper.shared.requiesProvider(false, url: URL.URLAutor, type: .GET, params: nil,nil,nil)
+            let (data, response) = try await sareed.requiesProvider( url: URL.URLAutor, type: .GET, params: nil)
             
             guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else{
                 throw NetworkError.networkErrorEnum.badRequest
@@ -365,28 +390,49 @@ import Foundation
         }
     }
     // listado de mangas de Autor{
-    private func getMangasAuhtor (pages:Int,author:String,_ per:Int) async throws -> MangasResponse{
-        let url = URL.ContetPages(url: URL.URLMangaAuthor, contenido: author, pages: pages, por: per)
-        let (data ,response) = try await sareed.requiesProvider(false, url: url, type: .GET, params: nil, nil, nil)
-        guard let httpResponse = response as? HTTPURLResponse,httpResponse.statusCode == 200 else {
-            throw NetworkError.networkErrorEnum.badRequest
-        }
-        JSONDecoder().keyDecodingStrategy = .convertFromSnakeCase
+    private func getMangasAuhtor(pages:Int,author:String,_ per:Int) async throws -> MangasResponse {
         do{
-            let response = try JSONDecoder().decode(MangasResponse.self, from: data)
-            return response
+            let url = URL.ContetPages(url: URL.URLMangaAuthor, contenido: author, pages: pages, por: per)
+            let (data ,response) = try await sareed.requiesProvider(url: url, type: .GET, params: nil)
+            guard let httpResponse = response as? HTTPURLResponse,httpResponse.statusCode == 200 else {
+                throw NetworkError.networkErrorEnum.badRequest
+            }
+            let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            do{
+                let response = try decoder.decode(MangasResponse.self, from: data)
+                return response
+            }catch{
+                print("Error decoding JSON: \(NetworkError.networkErrorEnum.badRequest)")
+                print(error.localizedDescription)
+                throw NetworkError.networkErrorEnum.badRequest
+            }
         }catch{
-            print("Error decoding JSON: \(NetworkError.networkErrorEnum.badRequest)")
-            print(error.localizedDescription)
-            throw NetworkError.networkErrorEnum.badRequest
+            throw error
         }
         
     }
+    private func authorSearch(content:String) async throws -> [Author]{
+    
+        let url = URL.PutContet(url: URL.URLSearchAuthor, content: content)
+        let(data,response) = try await sareed.requiesProvider(url: url, type: .GET, params: nil)
+        guard let httpResponse = response as? HTTPURLResponse,httpResponse.statusCode == 200 else{
+            throw NetworkError.networkErrorEnum.failed
+        }
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        do{
+            let response = try decoder.decode([Author].self, from: data)
+            return response
+        }catch{
+            throw error
+        }
+    }
     // Manga por id
-    private func getMangaID(id: String) async throws -> Item{
+    private func  getMangaID(id: String) async throws -> Manga{
         let url = URL.PutContet(url: URL.URLMangasID, content: id)
-        
-        let (data,response) = try await sareed.requiesProvider(false, url: url, type: .GET, params: nil, nil , nil)
+        print(url)
+        let (data,response) = try await sareed.requiesProvider( url: url, type: .GET, params: nil)
         guard let httpResponse = response as? HTTPURLResponse,httpResponse.statusCode == 200 else {
             throw NetworkError.networkErrorEnum.badRequest
         }
@@ -394,8 +440,7 @@ import Foundation
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         do{
             
-            let response = try decoder.decode(Item.self,from: data)
-            print(response)
+            let response = try decoder.decode(Manga.self,from: data)
             return response
             
         }catch{
@@ -407,7 +452,7 @@ import Foundation
     private func mangaContais(conten: String ,pages:Int,_ numero:Int)async throws -> MangasResponse {
         do{
             let url = URL.ContetPages(url: URL.URLmangaContais, contenido: conten, pages: pages, por: numero)
-            let (data,response) = try await sareed.requiesProvider(false, url: url, type: .GET, params: nil, nil , nil)
+            let (data,response) = try await sareed.requiesProvider( url: url, type: .GET, params: nil)
             guard let httpResponse = response as? HTTPURLResponse,httpResponse.statusCode == 200 else{
                 throw NetworkError.networkErrorEnum.badRequest
             }
@@ -424,11 +469,11 @@ import Foundation
         }
     }
     //empieza por
-    private func mangaBegings(conten: String)async throws ->[Item]{
+    private func mangaBegings(conten: String)async throws ->[Manga]{
         do{
             let url = URL.PutContet(url: URL.URLmangaBegings, content: conten)
             
-            let (data,response) = try await sareed.requiesProvider(false, url: url, type: .GET, params: nil,nil,nil)
+            let (data,response) = try await sareed.requiesProvider( url: url, type: .GET,params: nil)
             
             guard let httpResponse = response as? HTTPURLResponse,httpResponse.statusCode == 200 else{
                 throw NetworkError.networkErrorEnum.badRequest
@@ -436,8 +481,7 @@ import Foundation
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
             do{
-                let response = try decoder.decode([Item].self,from: data)
-                print(response)
+                let response = try decoder.decode([Manga].self,from: data)
                 return response
             } catch{
                 throw NetworkError.networkErrorEnum.requestFailed
@@ -456,22 +500,9 @@ import Foundation
         return totalPages + 1
     }
     
-    func verPeticiones(numP: Int,pages: Int,content:String?)async {
-        switch numP{
-            case 1 : await listMangas(page:pages, 20)
-            case 2 : await listTopMangas(page:pages,20)
-                //            case 3 : await listMangaGen(page: pages, gen: content ?? "nil")
-                //            case 4 : await listTopMangas(20)
-            default:
-                print("Número de tarea inválido")
-        }
-    }
-  
-    func toggleMangaSelection(_ manga: Item) {
-        
-        
+    // compruaba si el manga esta dentro de del array de favoritos , si esta lo elimina si no lo añade 
+    func toggleMangaSelection(_ manga: Manga) {
         if let index = favorites.firstIndex(where: { $0.id == manga.id }){
-            
             favorites.remove(at: index)
             print("eliminado \(manga.title)")
         } else {
