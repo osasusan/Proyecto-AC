@@ -6,14 +6,15 @@
 //
 
 import Foundation
+import SwiftData
 
 struct MangasResponse: Codable {
     let metadata: Metadata?
-    let items: [Item]
+    let items: [Manga]
 }
 
 struct Demographic :Codable{
-    let demographics : String?
+    let demographic : String?
     let id : String?
 }
 struct Theme:Codable {
@@ -38,9 +39,11 @@ struct Metadata:Codable {
     let page: Int
     let total: Int
 }
-
-struct Item:Codable{
-    
+struct APIErrorResponse:Codable {
+    let reason: String
+    let error: Bool
+}
+struct Manga : Codable{
     let background: String?
     let title: String
     let url: String?
@@ -59,11 +62,23 @@ struct Item:Codable{
     let authors: [Author]?
     let endDate: String?
     let titleEnglish: String?
-    
 }
-struct ItemsResponse :Codable{
-    let items : [Item]
+
+struct User: Codable {
+    let id: String
 }
+
+// MARK: - UserCollection
+struct UserCollection: Codable {
+    let readingVolume: Int
+    let user: User
+    let completeCollection: Bool
+    let id: String
+    let manga: Manga
+    let volumesOwned: [Int]
+}
+
+
 
 
 

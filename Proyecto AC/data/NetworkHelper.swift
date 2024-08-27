@@ -16,7 +16,7 @@ class NetworkHelper : NetworkProtocol {
         case PUT
         case DELETE
     }
-    private var userToken :String = ""
+    private var userToken : String = ""
     
     func setToken(tokens:String){
         userToken = tokens
@@ -29,7 +29,33 @@ class NetworkHelper : NetworkProtocol {
     private func requestApi(request : URLRequest) async throws -> (Data, URLResponse){
         return try await URLSession.shared.data(for: request)
     }
-    func requiesProvider(_ neToken : Bool ,url : URL ,type : RequestType ,params :[String: Any]?,_ username:String? ,_ password:String?)async throws -> (Data,URLResponse){
+    //MARK: METODOS PUBLICOS PARA PETICION A API
+
+    func requiesProviderUser(url : URL ,type : RequestType ,_ username:String? ,_ password:String?)async throws -> (Data,URLResponse){
+        
+        guard !url.absoluteString.isEmpty else {
+            throw NetworkError.networkErrorEnum.invalidUrl
+        }
+        var request = URLRequest(url: url)
+        request.httpMethod = type.rawValue
+        
+        let token = "s--------------------------------Y"
+        
+        request.addValue( token , forHTTPHeaderField: "App-Token")
+        if let username = username, let password = password {
+            let credentials = "\(username):\(password)"
+            guard let credentialsData = credentials.data(using: .utf8) else {
+                throw NetworkError.networkErrorEnum.invalidData
+            }
+            let credentialsEncode = credentialsData.base64EncodedString()
+            
+            request.addValue("Basic \(credentialsEncode)", forHTTPHeaderField: "Authorization")
+        }
+        
+        return try await requestApi(request: request)
+    }
+    
+    func requiesProvider( url : URL ,type : RequestType ,params : [String: Any]?)async throws -> (Data,URLResponse){
         
         guard !url.absoluteString.isEmpty else {
             throw NetworkError.networkErrorEnum.invalidUrl
@@ -38,28 +64,20 @@ class NetworkHelper : NetworkProtocol {
         request.httpMethod = type.rawValue
         
         
-        if let diction = params {
-            let data = try JSONSerialization.data(withJSONObject: diction, options: [])
+        if let dictionary = params {
+            let data = try JSONSerialization.data(withJSONObject: dictionary, options: [])
             request.httpBody = data
             
         }
-        if neToken == true{
-
-            let token = "sLGH38NhEJ0_anlIWwhsz1-LarClEohiAHQqayF0FY"
-            request.addValue("Bearer" + token , forHTTPHeaderField: "App-Token")
-            if let username = username, let password = password {
-                let credentials = "\(username):\(password)"
-                guard let credentialsData = credentials.data(using: .utf8) else {
-                    throw NetworkError.networkErrorEnum.invalidData
-                }
-                let base64Credentials = credentialsData.base64EncodedString()
-                request.addValue("Basic \(base64Credentials)", forHTTPHeaderField: "Authorization")
-            }
-        }else{
-            request.addValue("Bearer" + getToken(), forHTTPHeaderField: "Authorization")
-            
-            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        }
+        
+        let token = "s--------------------------------Y"
+        request.addValue("\(token)", forHTTPHeaderField: "App-Token")
+        request.addValue("Bearer \( getToken())", forHTTPHeaderField: "Authorization")
+        
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        
         return try await requestApi(request: request)
     }
+    
 }

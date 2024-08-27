@@ -15,21 +15,12 @@ struct UserModel:Codable{
         case email
         case password 
     }
-    
-    init(from decoder: any Decoder) throws {
-        let container: KeyedDecodingContainer<UserModel.CodingKeys> = try decoder.container(keyedBy: UserModel.CodingKeys.self)
-        
-        self.email = try container.decode(String.self, forKey: UserModel.CodingKeys.email)
-        self.password = try container.decode(String.self, forKey: UserModel.CodingKeys.password)
-        
-    }
-    
-    func encode(to encoder: any Encoder) throws {
-        var container: KeyedEncodingContainer<UserModel.CodingKeys> = encoder.container(keyedBy: UserModel.CodingKeys.self)
-        
-        try container.encode(self.email, forKey: UserModel.CodingKeys.email)
-        try container.encode(self.password, forKey: UserModel.CodingKeys.password)
-    }
-    
 }
+struct UserColectionRequest: Codable {
+    var manga: Int
+    var completeCollection: Bool
+    var volumesOwned: [Int]
+    var readingVolume: Int?
+}
+
 
