@@ -43,31 +43,41 @@ struct LoginView: View {
                             if viewModel.isLogede {
                                 dismiss.callAsFunction()
                             }
-                            
                             error = ""
-                            
+                            viewModel.errorMensage = ""
                         }else {
                             error = "los campos estan vacions"
                         }
                     }
                 }label:{
-                    Text("log")
+                    Text("Log In")
+                        .tint(.white)
+                        .frame(width: 100)
+                        .padding(10)
+                        .background(.blue)
+                        .clipShape(Capsule())
                 }
+                .padding(.top,20)
+                
                 Button{
                     Task{
                         newUser.toggle()
                     }
                 }label:{
-                    Text("crea cuenta")
+                    Text("New user")
+                        .tint(.white)
+                        .frame(width: 100)
+                        .padding(10)
+                        .background(.blue)
+                        .clipShape(Capsule())
                     
                 }
+                .padding(.top,20)
                 
-                Text(viewModel.token ?? "")
-                    .foregroundStyle(.yellow   )
-                
+            
                 Text(viewModel.errorMensage ?? "")
                     .foregroundStyle(.red)
-                    .tint(.blue)
+                    
             }
         }
         .sheet(isPresented: $newUser , content: {

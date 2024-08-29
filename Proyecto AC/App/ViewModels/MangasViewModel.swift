@@ -31,6 +31,8 @@ import Foundation
     var searchM: String = ""
     var page = 1
     
+    let userDefaults = UserDefaults.standard
+    
     var sareed: NetworkProtocol
     
     init(sareed: NetworkProtocol = NetworkHelper()) {
@@ -242,7 +244,7 @@ import Foundation
     private func mangaGen(page:Int,gen:String ,per:Int) async throws -> MangasResponse {
         
         let url = URL.URLGenresMangaList
-        let urlFinal = URL.ContetPages(url: url, contenido: gen, pages: page, por:per)
+        let urlFinal = URL.ContetPages(url: url, contenido: gen, pages: page, per:per)
         
         let (data , respose) = try await sareed.requiesProvider(url:urlFinal, type: .GET, params: nil)
         
@@ -307,7 +309,7 @@ import Foundation
     }
     // listado de magas de tema
     private func getMangaTheme(pages: Int,theme:String) async throws -> MangasResponse{
-        let url = URL.ContetPages(url: URL.URLMagasThemes, contenido: theme, pages: pages, por: 20)
+        let url = URL.ContetPages(url: URL.URLMagasThemes, contenido: theme, pages: pages, per: 20)
         let (data , respose) = try await sareed.requiesProvider( url:url, type: .GET, params: nil)
         
         guard let httpRespose = respose as? HTTPURLResponse, httpRespose.statusCode == 200 else {
@@ -328,7 +330,7 @@ import Foundation
     private func listMangaDemos(pages: Int,gen:String,_ per:Int) async throws -> MangasResponse {
         
         let urL = URL.URLDemosMangaList
-        let funalURl = URL.ContetPages(url: urL, contenido: gen, pages:pages, por:per  )
+        let funalURl = URL.ContetPages(url: urL, contenido: gen, pages:pages, per:per  )
         let (data , respose) = try await sareed.requiesProvider( url: funalURl, type: .GET, params: nil)
         
         guard let httpRespose = respose as? HTTPURLResponse, httpRespose.statusCode == 200 else {
@@ -392,7 +394,7 @@ import Foundation
     // listado de mangas de Autor{
     private func getMangasAuhtor(pages:Int,author:String,_ per:Int) async throws -> MangasResponse {
         do{
-            let url = URL.ContetPages(url: URL.URLMangaAuthor, contenido: author, pages: pages, por: per)
+            let url = URL.ContetPages(url: URL.URLMangaAuthor, contenido: author, pages: pages, per: per)
             let (data ,response) = try await sareed.requiesProvider(url: url, type: .GET, params: nil)
             guard let httpResponse = response as? HTTPURLResponse,httpResponse.statusCode == 200 else {
                 throw NetworkError.networkErrorEnum.badRequest
@@ -451,7 +453,7 @@ import Foundation
     
     private func mangaContais(conten: String ,pages:Int,_ numero:Int)async throws -> MangasResponse {
         do{
-            let url = URL.ContetPages(url: URL.URLmangaContais, contenido: conten, pages: pages, por: numero)
+            let url = URL.ContetPages(url: URL.URLmangaContais, contenido: conten, pages: pages, per: numero)
             let (data,response) = try await sareed.requiesProvider( url: url, type: .GET, params: nil)
             guard let httpResponse = response as? HTTPURLResponse,httpResponse.statusCode == 200 else{
                 throw NetworkError.networkErrorEnum.badRequest
@@ -508,6 +510,35 @@ import Foundation
         } else {
             favorites.append(manga)
             print("añadido \(manga.title)")
+        }
+        saveFavorites()
+    }
+    func saveFavorites() {
+        do {
+            // Codifica el array de favoritos a JSON
+            let encoder = JSONEncoder()
+            let data = try encoder.encode(favorites)
+            
+            // Guarda el JSON en UserDefaults
+            userDefaults.set(data, forKey: "favorites")
+            userDefaults.synchronize()
+        } catch {
+            print("Error al guardar favoritos en UserDefaults: \(error)")
+        }
+    }
+
+    func loadFavorites() {
+        if let data = userDefaults.data(forKey: "favorites") {
+            do {
+                // Decodifica el JSON a tu array de favoritos
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                favorites = try decoder.decode([Manga].self, from: data)
+            } catch {
+                print("Error al cargar favoritos desde UserDefaults: \(error)")
+            }
+        } else {
+            favorites = []
         }
     }
 }

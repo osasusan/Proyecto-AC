@@ -10,6 +10,9 @@ import SwiftUI
 struct MangaComponet: View {
     
     @State var manga : Manga?
+    @Environment(MangasViewModel.self) private var vm
+    @Environment(LogViewModel.self) private var viewModel
+    @State var favsi :Bool = false
     var body: some View {
         VStack(spacing:3){
             LazyVStack{
@@ -28,20 +31,48 @@ struct MangaComponet: View {
                         
                     }
                     // boton el cuan te saca un desplegable donde lo puedes añadir a una favoritos o a una collecion
-                    Button{
-                        
-                    }label:{
-                        //Image(systemName: "star")
-                        Image(systemName: "ellipsis",variableValue: 2)
-                            .rotationEffect(.degrees(90))
-                        
+                    if viewModel.isLogede == true{
+                        Button{
+                            favsi.toggle()
+                            vm.toggleMangaSelection(manga!)
+                        }label: {
+                            
+                            let image = favsi ? Image(systemName: "star.fill"): Image(systemName: "star")
+                                
+                            image
+                                .tint(.yellow)
+                                .scaledToFit()
+                                .frame(height:10)
+                                .padding(.bottom,2)
+                        }
+                        .frame(height:15)
                     }
+                    
+                    //                    }label:{
+                    //                        //Image(systemName: "star")
+                    //                        Image(systemName: "ellipsis",variableValue: 2)
+                    //                            .rotationEffect(.degrees(90))
+                    //
+                    //                    }
                     
                 }
             }
         }
         .shadow(radius: 1,x: 2)
         .frame(width: 100, height: 225)
+        .onAppear{
+            Task{
+                if viewModel.isLogede{
+                    comprovationFav(manga!)
+                }
+            }
+            
+        }
+    }
+    func comprovationFav(_ manga: Manga){
+        if (vm.favorites.firstIndex(where: { $0.id == manga.id }) != nil) {
+            favsi = true
+        }
     }
 }
 
@@ -68,7 +99,7 @@ struct MangaComponetDetalle:View{
                         .fontWidth(.compressed)
                         .tint(.white)
                         .lineLimit(4)
-                        
+                    
                     
                     Text("id:\(manga?.id ?? 0)")
                         .font(.footnote)
@@ -103,7 +134,9 @@ struct MangaComponetDetalle:View{
                             }label: {
                                 
                                 let image = favsi ? Image(systemName: "star.fill"): Image(systemName: "star")
+                                   
                                 image
+                                    .tint(.yellow)
                                     .scaledToFit()
                                     .frame(height:15)
                                     .padding(.bottom,2)
@@ -120,7 +153,9 @@ struct MangaComponetDetalle:View{
         .padding()
         .onAppear{
             Task{
-                comprovationFav(manga ?? manga2)
+                if !vm.favorites.isEmpty{
+                    comprovationFav(manga ?? manga2)
+                }
             }
         }
     }
@@ -130,14 +165,14 @@ struct MangaComponetDetalle:View{
         }
     }
 }
-struct UserCollectionView :View{
+struct UserCellCollection :View{
     @State var manga:UserCollection?
     @State var favsi :Bool = false
     var body: some View {
         
         VStack(spacing:10){
             HStack(alignment: .center){
-                imageAsync(imagen: manga?.manga.mainPicture ?? "nil", width: 150, height: 240,radio: 20)
+                imageAsync(imagen: manga?.manga.mainPicture ?? "nil", width: 130, height: 220,radio: 20)
                 
                 HStack(alignment: .bottom){
                     VStack(alignment:.leading) {
@@ -153,6 +188,24 @@ struct UserCollectionView :View{
                             .font(.footnote)
                             .fontWeight(.bold)
                             .fontWidth(.compressed)
+                        
+                        Text("Volumes owned: \( manga?.volumesOwned?.last?.description ?? "vacio")")
+                            .font(.footnote)
+                            .bold()
+                            .fontWeight(.light)
+                            .fontWidth(.compressed)
+                            .foregroundStyle(.white)
+                        Text("Volumes reading: \( manga?.readingVolume?.description ?? "vacio")")
+                            .font(.footnote)
+                            .fontWeight(.light)
+                            .fontWidth(.compressed)
+                            .foregroundStyle(.white)
+                        let textCompler = manga!.completeCollection ? "complete " : "not complete"
+                        Text(textCompler)
+                            .font(.footnote)
+                            .fontWeight(.light)
+                            .fontWidth(.compressed)
+                            .foregroundStyle(.white)
                         Spacer()
                         Text("\(manga?.manga.authors?.first?.firstName ?? "4") \(manga?.manga.authors?.first?.lastName ?? "3")")
                             .font(.footnote)
@@ -172,14 +225,11 @@ struct UserCollectionView :View{
                             Text(String(format: "%.2f",manga?.manga.score ?? 0.0))
                                 .font(.footnote)
                                 .foregroundStyle(.white)
-                            
-                            
-                            
                         }
                     }
                 }
             }
-            Divider()
+           
         }
         .frame(height: 230)
         .padding()
@@ -187,11 +237,15 @@ struct UserCollectionView :View{
 }
 struct MangaDetailVeiw :View {
     @State var manga:Manga?
+    @Environment(LogViewModel.self)var vmLog
+    @Environment(UserViewModel.self)var vm
+    @State var addCollection = false
     var notAvailable = "Data is not available"
     
     var body: some View{
         ScrollView{
             VStack{
+                
                 imageAsync(imagen: manga?.mainPicture ?? "nil",width:360,height: 600,radio: 0)
                 HStack(spacing: -20){
                     
@@ -203,6 +257,19 @@ struct MangaDetailVeiw :View {
                         .fontWidth(.compressed)
                         .padding(.leading,20)
                     
+                }
+                if vmLog.isLogede{ // compureba si esta logeado para poder mosrtar el boton
+                    Button {
+                        addCollection.toggle()
+                        vm.idManga = manga?.id
+                    } label: {
+                        Text("Add to my callections")
+                            .tint(.white)
+                            .padding(10)
+                            .padding(.horizontal,10)
+                            .background(.blue)
+                            .clipShape(Capsule())
+                    }
                 }
                 trustInfo(camp: "Synopsis", manga:manga?.sypnosis ?? notAvailable )
                 trustInfo(camp: "Background", manga:manga?.background ?? notAvailable )
@@ -219,7 +286,18 @@ struct MangaDetailVeiw :View {
             }
         }
         .background(Color.customColor)
+        
+        .sheet(isPresented: $addCollection) {
+            NewCollectionView()
+                .onDisappear{
+                    vm.volumesOwned = ""
+                    vm.idManga = nil
+                    vm.readingVolume = nil
+                    vm.isComplet = false
+                }
+        }
     }
+    
     
 }
 
@@ -297,7 +375,7 @@ struct trustInfo :View{
     ZStack{
         Color.customColor
             .ignoresSafeArea()
-        UserCollectionView()
+        UserCellCollection()
     }
 }
 #Preview("MangaComponetDetalle"){
@@ -312,9 +390,7 @@ struct trustInfo :View{
     }
 }
 #Preview("MangaDetailVeiw"){
-    ZStack{
-        Color.customColor
-            .ignoresSafeArea()
-        MangaDetailVeiw()
-    }
+    MangaDetailVeiw()
+        .environment(LogViewModel())
+    
 }

@@ -36,9 +36,12 @@ struct ViewMangas : View{
                                     .id("TOP")
                                 }
                             } else {
-                                Text("Loading")
-                                    .bold()
-                                ProgressView()
+                                HStack{
+                                    Text("Manga not faund  ")
+                                        .bold()
+                                    ProgressView()
+                                }
+                                
                             }
                         }
                     }
@@ -127,8 +130,9 @@ struct ViewMangas : View{
         }
     }
 }
-//vista de  resultado de busqueda por ID
 
+
+//vista de  resultado de busqueda por ID
 struct MangarIdResulr : View {
     @Environment(MangasViewModel.self) private var vm
     @State var buscar :String
@@ -137,10 +141,10 @@ struct MangarIdResulr : View {
         ZStack{
             Color.customColor.ignoresSafeArea()
             VStack{
-                if let manga = idManga {  // Verifica si idManga no es nil antes de mostrar la vista de detalles
+                if let manga = idManga {  // Verifica si idManga no es nil a
                     MangaDetailVeiw(manga: manga)
                 } else {
-                    Text("Loading...")  // O un indicador de carga, si idManga es nil
+                    Text("Manga not faund")  // O un indicador de carga, si idManga es nil
                     ProgressView()
                 }
             }
@@ -150,6 +154,40 @@ struct MangarIdResulr : View {
                 await vm.getIdManga(id: buscar)
                 idManga = vm.mangasId
             }
+        }
+        
+    }
+}
+struct MangarIdResulrCollection : View {
+    @Environment(UserViewModel.self) private var vm
+    @State var buscar :String
+    @State var idManga : UserCollection?
+    var body: some View {
+        ZStack{
+            Color.customColor.ignoresSafeArea()
+            VStack{
+                if let manga = idManga {  // Verifica si idManga no es nil a
+                    NavigationLink {
+                        MangaDetailVeiw(manga: manga.manga)
+                    } label: {
+                        UserCellCollection(manga: manga)
+                    }
+                    
+                } else {
+                    Text("Manga not faund")  // O un indicador de carga, si idManga es nil
+                    ProgressView()
+                }
+            }
+        }
+        .onAppear{
+            Task{
+                await vm.buscarColecionPorID(id: buscar)
+                idManga = vm.userCollectionsID
+            }
+        }
+        .onDisappear{
+            idManga = nil
+            vm.userCollectionsID = nil
         }
         
     }
@@ -200,13 +238,13 @@ struct ListaTemas:View {
 
 
 #Preview ("Vista mangas"){
-    ZStack{
-        
-        ViewMangas()
-            .environment(MangasViewModel())
-    }
+    ViewMangas()
+        .environment(MangasViewModel())
 }
-
+#Preview ("resultadoBusqueda"){
+    MangarIdResulrCollection(buscar: "74")
+        .environment(UserViewModel())
+}
 #Preview("lsitado de temas"){
     ListaTemas(nume:3)
         .environment(MangasViewModel())

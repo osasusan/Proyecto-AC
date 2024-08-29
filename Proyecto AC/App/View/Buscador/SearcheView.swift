@@ -46,6 +46,7 @@ struct SearcheView: View {
                                 Picker("selec filter", selection: $filter) {
                                     ForEach(shFilter.allCases){option in
                                         Text(option.rawValue).tag(option)
+                                            .tint(.white)
                                     }
                                 }
                                 .pickerStyle(.menu)

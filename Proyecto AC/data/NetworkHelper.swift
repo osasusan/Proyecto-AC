@@ -39,7 +39,7 @@ class NetworkHelper : NetworkProtocol {
         var request = URLRequest(url: url)
         request.httpMethod = type.rawValue
         
-        let token = "s--------------------------------Y"
+        let token = "-------------------------------"
         
         request.addValue( token , forHTTPHeaderField: "App-Token")
         if let username = username, let password = password {
@@ -69,10 +69,10 @@ class NetworkHelper : NetworkProtocol {
             request.httpBody = data
             
         }
-        
-        let token = "s--------------------------------Y"
-        request.addValue("\(token)", forHTTPHeaderField: "App-Token")
         request.addValue("Bearer \( getToken())", forHTTPHeaderField: "Authorization")
+        let token = "------------------------------------"
+        request.addValue("\(token)", forHTTPHeaderField: "App-Token")
+       
         
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         

@@ -50,25 +50,45 @@ extension URL{
     static var URLUserCollectionID:URL { return URL(string :"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/collection/manga/")!}
     static var URLDelateCollectionID:URL { return URL(string :"https://mymanga-acacademy-5607149ebe3d.herokuapp.com/collection/manga/")!}
     
-    
-    
+    // MARK: Metodos de modificacion de URL
+    /// estas son funciones que va a ir modificando las URLs si es necesario, dependiendo de la peticion que se tenga que realizar
+    /// se usarra una u otra segun las lnecesidades de la aplicación
     static func PutContet(url:URL ,content: String) -> URL{
+        /// Esta función añade un nuevo componente al final de la URL proporcionada.
+        /// - Parameters:
+        ///   - url: La URL original a la que se le añadirá el contenido.
+        ///   - content: El componente que se desea añadir al final de la URL.
+        /// - Returns: Una nueva URL con el componente añadido al final.
         
         return  url.appendingPathComponent(content)
     }
     static func URLPagesChange(url: URL,page: Int,per:Int?) -> URL{
+        
+        /// Esta función modifica una URL añadiendo o actualizando los parámetros de la página y la cantidad de elementos por página.
+        /// - Parameters:
+        ///   - url: La URL original a la que se le añadirán los nuevos parámetros.
+        ///   - page: El número de la página que se desea cargar.
+        ///   - per: La cantidad de elementos que se desea cargar por página. Si no se proporciona, se usará un valor por defecto de 20.
+        /// - Returns: Una nueva URL con los parámetros `page` y `per` añadidos o actualizados.
         var components = URLComponents(url: url, resolvingAgainstBaseURL: false)
         let queryItems = [
             URLQueryItem(name: "page", value: "\(page)"),
-            URLQueryItem(name: "per", value: "\(per ?? 20)")
+            URLQueryItem(name: "per", value: "\(per ?? 20)") // indiaca la cantidad de elemntos que se van a cargar
         ]
         components?.queryItems = queryItems
         return components?.url ?? url
         
     }
-    static func ContetPages(url:URL,contenido:String, pages:Int,por:Int?)-> URL {
+    static func ContetPages(url:URL,contenido:String, pages:Int,per:Int?)-> URL {
+        /// Esta función combina la modificación de una URL añadiendo un componente y ajustando los parámetros de paginación.
+        /// - Parameters:
+        ///   - url: La URL base a la que se le añadirán componentes y parámetros.
+        ///   - contenido: El componente que se desea añadir al final de la URL.
+        ///   - pages: El número de la página que se desea cargar.
+        ///   - per: La cantidad de elementos por página que se desea cargar. Si es nil, se usa 20 como valor por defecto.
+        /// - Returns: Una URL final que incluye el nuevo componente añadido y los parámetros de paginación ajustados.
         let contetPages = URL.PutContet(url: url, content:contenido )
-        let UrlFinal = URL.URLPagesChange(url:contetPages,page: pages, per: por ?? 20)
+        let UrlFinal = URL.URLPagesChange(url:contetPages,page: pages, per: per ?? 20)
         return UrlFinal
     }
 }
@@ -98,6 +118,16 @@ extension View{
             .foregroundStyle(Color.white)
     }
     
+    // No disponible
+    /* func comprovationFav( favorites:[Manga],_ manga: Manga, favsi:Bool)-> Bool{
+     if (favorites.firstIndex(where: { $0.id == manga.id }) != nil) {
+     return favsi == true
+     }else{
+     return favsi == false
+     }
+     }
+     */
+    
     func imageAsync(imagen: String,width:CGFloat,height:CGFloat,radio:CGFloat)-> some View{
         VStack{
             AsyncImage(url: URL(string: cleanUrl(imagen))){ phase in
@@ -120,18 +150,22 @@ extension View{
         }
     }
     
-    //limpiar url de la Imgen
+    //limpiar url de las Imagens
     func cleanUrl(_ urlString: String) -> String {
-        var cleanedUrl = urlString.trimmingCharacters(in: .whitespacesAndNewlines)
-        cleanedUrl = cleanedUrl.replacingOccurrences(of: "\"", with: "")
+        /// Esta función limpia una cadena de texto que representa una URL, eliminando espacios en blanco, saltos de línea y comillas.
+           /// - Parameter urlString: La cadena de texto que representa la URL a limpiar.
+           /// - Returns: Una nueva cadena de texto sin espacios en blanco, saltos de línea al principio y al final, y sin comillas.
+        var cleanedUrl = urlString.trimmingCharacters(in: .whitespacesAndNewlines) // se elinina los espacios en blaco y saltos de linea
+        cleanedUrl = cleanedUrl.replacingOccurrences(of: "\"", with: "") // se remplazan las comillas por candeas vacias
         return cleanedUrl
     }
+    // voy a mentor esta dos finciones las ha hecho chatGPT
     func transparentListStyle() -> some View {
         self.modifier(TransparentListStyle())
     }
     func dismissKeyboard() {
-           UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-       }
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
 }
 //MARK: Color priopio
 extension Color{
@@ -139,6 +173,7 @@ extension Color{
         LinearGradient(colors: [Color.pdark,Color.grDark], startPoint: .top, endPoint: .bottom)
     }
 }
+// MARK: Metodos de manejo de errores personalizaodo
 extension Error{
     func onErrorResposnse() -> String{
         if let errors = self as? NetworkError.networkErrorEnum {
@@ -149,14 +184,14 @@ extension Error{
     }
 }
 
-
+// MARK: Filtros de busqueda
 enum shFilter : String ,CaseIterable,Identifiable{
-   
+    
     case contains = "Contains"
-    case begins = "Begins "
-    case id = "  ID   "
-    case author = "Author"
-   
+    case begins = "Begins  "
+    case id = "   ID   "
+    case author = "Author "
+    
     
     var id :String { self.rawValue }
 }

@@ -50,6 +50,6 @@ struct AuthorListName: View {
     }
 }
 #Preview {
-    AuthorListName()
+    AuthorListName(autorTosearch: "akira")
         .environment(MangasViewModel())
 }
