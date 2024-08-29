@@ -16,7 +16,7 @@ struct Proyecto_ACApp: App {
 
     var body: some Scene {
         WindowGroup {
-            TabBar()
+            SplashView()
                 .preferredColorScheme(.dark)
                 .environment(vm)
                 .environment(viewModel)

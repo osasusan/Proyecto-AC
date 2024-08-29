@@ -11,20 +11,24 @@ import Observation
 @Observable class LogViewModel{
     
     var email : String = "jcfmunoz@icloud.com"
+    var newEmail : String = ""
     var pass : String = ""
+    var newPass : String = ""
+    var newPass2 : String = ""
     var token : String?
     var errorMensage :String?
     var isLogede = false
-    
+    let userDefaults = UserDefaults.standard
     // inicio de sesion
     func logUser(user:String,pass:String) async {
         do{
-            let (tokenn,error) = try await login(username:user,pass:pass)
-            print(tokenn!)
-            token = tokenn
+            let (token,error) = try await login(username:user,pass:pass)
+            print(token!)
+            
             isLogede = true
             errorMensage = ""
             NetworkHelper.shared.setToken(tokens: token!)
+            userDefaults.set(token, forKey: "savedToken")
             if (error != nil){
                 errorMensage = error?.reason.description
             }
@@ -95,5 +99,12 @@ import Observation
         }
     }
     
+    func logOut() {
+        userDefaults.removeObject(forKey: "savedToken")
+        userDefaults.removeObject(forKey: "favorites")
+        
+        NetworkHelper.shared.setToken(tokens: "")
+        isLogede = false
+    }
 }
 

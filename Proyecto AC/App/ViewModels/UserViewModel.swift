@@ -11,29 +11,43 @@ import Foundation
 @Observable class UserViewModel {
     var alet = ""
     var token  = NetworkHelper.shared.getToken()
-    var userCollections: [UserCollection] = []
+    var userCollection: [UserCollection] = []
     var userCollectionsID: UserCollection?
-
+    var idManga : Int?
+    var isComplet : Bool = false
+    var isEliminated : Bool = false
+    var volumesOwned : String = ""
+    var readingVolume : Int?
+    var menssageError : String?
+    var menssageBien : String?
+    var changetoken :Bool =  false
+    
+    let userDefaults = UserDefaults.standard
     // renovar token
     func getNewToken() async {
         do{
-           
             let newToken = try await renewToken()
             NetworkHelper.shared.setToken(tokens: newToken)
+            userDefaults.set(newToken, forKey: "savedToken")
             print(newToken)
+            menssageError = ""
+            changetoken = true
         }catch{
-            token = error.onErrorResposnse()
+           
+            menssageError = error.onErrorResposnse()
+            userDefaults.removeObject(forKey: "savedToken")
+            changetoken = false
         }
         
     }
     private func renewToken () async throws -> String{
-       let (data,response) = try await NetworkHelper.shared.requiesProvider(url: URL.URLReToken, type: .POST, params: nil)
+        let (data,response) = try await NetworkHelper.shared.requiesProvider(url: URL.URLReToken, type: .POST, params: nil)
         guard let httpResponse = response as? HTTPURLResponse,httpResponse.statusCode == 200 else {
             throw NetworkError.networkErrorEnum.badRequest
         }
         do{
             if let token = String(data: data,encoding: .utf8){
-               
+                
                 return token
             } else{
                 throw NetworkError.networkErrorEnum.badRequest
@@ -45,42 +59,58 @@ import Foundation
     //
     
     //   crear colleccion
-    func newColletion () async{
+    func newColletion (id:Int,isComplet:Bool,volumesOwned:String,readingVolume:Int) async{
         do{
-            self.alet = try await createNewCollection(manga: 19, isComplete: false, volumesOwned: [1,2,3,5,6,7,8,9,10,11], readingVolume: 5)
+            let ownedVolumesArray = parseVolumesOwned(volumesOwned)
+            self.menssageBien = try await createNewCollection(manga: id , isComplete: isComplet, volumesOwned: ownedVolumesArray, readingVolume: readingVolume)
+           
         }catch{
             alet = error.onErrorResposnse()
+        }
+        
+        func parseVolumesOwned(_ volumesOwned: String) -> [Int] {
+            //paso el String a un Int  para lugo hacer un rago de 1 hasta numero indicado
+            guard let endVolume = Int(volumesOwned.trimmingCharacters(in: .whitespaces)) else {
+                return []
+            }
+            return Array(1...endVolume)
         }
     }
     private func createNewCollection(manga:Int,isComplete:Bool,volumesOwned:[Int],readingVolume:Int) async throws-> String {
-        let parametros:[String:Any] = [
-            "manga": manga,
-            "completeCollection" : isComplete,
-            "volumesOwned" : volumesOwned,
-            "readingVolume" : readingVolume
-        ]
-        let(_,response) = try await NetworkHelper.shared.requiesProvider(url: URL.URLNewCollection,type: .POST, params: parametros)
-        guard let httpResponse = response as? HTTPURLResponse,httpResponse.statusCode == 201  else {
-            throw NetworkError.networkErrorEnum.badRequest
+        do{
+            let parametros:[String:Any] = [
+                "manga": manga,
+                "completeCollection" : isComplete,
+                "volumesOwned" : volumesOwned,
+                "readingVolume" : readingVolume
+            ]
+            let(_,response) = try await NetworkHelper.shared.requiesProvider(url: URL.URLNewCollection,type: .POST, params: parametros)
+            guard let httpResponse = response as? HTTPURLResponse,httpResponse.statusCode == 201  else {
+                throw NetworkError.networkErrorEnum.badRequest
+            }
+            let ok = "The collection has been added successfully"
+            return ok
+        }catch{
+            throw error
         }
-        let oksas = "todo bien"
-        return oksas
-        
     }
     
+    
+    // ver collecione
     func showUserCollection ()async{
         
         do{
-            self.userCollections = try await userCollections()
+            self.userCollection = try await userCollections()
         }catch{
             alet = error.onErrorResposnse()
         }
     }
-    private func userCollections() async throws -> [UserCollection]{
+    private func userCollections() async throws ->[UserCollection]{
         let (data,response) = try await NetworkHelper.shared.requiesProvider(url: URL.URLUserCollection, type: .GET, params: nil)
         guard let httpResponse = response as? HTTPURLResponse,httpResponse.statusCode == 200 else{
-            throw NetworkError.networkErrorEnum.failed
+            throw NetworkError.networkErrorEnum.badRequest
         }
+        
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         do{
@@ -89,17 +119,18 @@ import Foundation
         }catch{
             throw error
         }
-        
     }
-    func buscarColecionPorID()async{
+    
+    // uscar colleccion por ID
+    func buscarColecionPorID(id:String)async{
         do{
-            self.userCollectionsID = try await shearchidCollection(id: "19")
+            self.userCollectionsID = try await shearchIdCollection(id: id)
         }catch{
             alet = error.onErrorResposnse()
         }
     }
     
-    private func shearchidCollection(id:String)async throws -> UserCollection {
+    private func shearchIdCollection(id:String)async throws -> UserCollection {
         
         let url = URL.PutContet(url: URL.URLUserCollectionID, content: id)
         let (data, response) = try await NetworkHelper.shared.requiesProvider(url: url, type: .GET, params: nil)
@@ -116,6 +147,33 @@ import Foundation
         }catch{
             
             throw error
+        }
+    }
+    
+    
+    // Borrar Collecion
+    func delMangaColle(id :String) async{
+        do{
+            self.menssageBien = try await deleteMnagaColletion(id: id)
+            isEliminated.toggle()
+            
+        }catch{
+            menssageError = error.onErrorResposnse()
+            isEliminated.toggle()
+        }
+    }
+    
+    func deleteMnagaColletion(id:String) async throws ->String{
+        
+        let url = URL.PutContet(url: URL.URLDelateCollectionID, content: id)
+        let (_, response) = try await NetworkHelper.shared.requiesProvider(url: url, type: .DELETE, params: nil)
+        guard let httpresponse = response as? HTTPURLResponse,httpresponse.statusCode == 200 else{
+            throw NetworkError.networkErrorEnum.validationError("that maga isn't in your collection")
+            
+        }
+        do{
+            let response = "Collection has been eliminated "
+            return response
         }
     }
 }

@@ -13,21 +13,21 @@ struct MangasResponse: Codable {
     let items: [Manga]
 }
 
-struct Demographic :Codable{
+struct Demographic :Codable,Equatable{
     let demographic : String?
     let id : String?
 }
-struct Theme:Codable {
+struct Theme:Codable ,Equatable{
     let theme: String
     let id: String
 }
 
-struct Genre:Codable{
+struct Genre:Codable,Equatable{
     let id : String
     let genre : String
   
 }
-struct Author:Codable{
+struct Author:Codable,Equatable{
     let lastName: String
     let firstName: String
     let role: String
@@ -43,7 +43,9 @@ struct APIErrorResponse:Codable {
     let reason: String
     let error: Bool
 }
-struct Manga : Codable{
+struct Manga : Codable ,Equatable{
+
+    
     let background: String?
     let title: String
     let url: String?
@@ -70,12 +72,12 @@ struct User: Codable {
 
 // MARK: - UserCollection
 struct UserCollection: Codable {
-    let readingVolume: Int
+    let readingVolume: Int?
     let user: User
     let completeCollection: Bool
     let id: String
     let manga: Manga
-    let volumesOwned: [Int]
+    let volumesOwned: [Int]?
 }
 
 

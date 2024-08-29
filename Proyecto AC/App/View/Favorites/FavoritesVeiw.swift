@@ -30,10 +30,8 @@ struct FavoritesVeiw: View {
                                         MangaDetailVeiw(manga: fav)
                                     }
                                     
-                                    
                                 } label: {
                                     MangaListComponet(manga: fav)
-                                    
                                         .swipeActions(edge: .leading){
                                             Button {
                                                 withAnimation(.snappy){
@@ -46,9 +44,7 @@ struct FavoritesVeiw: View {
                                         }
                                 }
                             }
-                            
                         }
-                        
                     }
                     .padding()
                     .transparentListStyle()
@@ -66,18 +62,28 @@ struct FavoritesVeiw: View {
                         .font(.title)
                         .fontWeight(.bold)
                         .fontWidth(.compressed)
-                        
+                    
                 }
                 .onAppear{
-                    logView.toggle()
+                    logView = true
                 }
+            }
+        }
+        .onAppear {
+            if vmLog.isLogede {
+                vm.loadFavorites()
             }
         }
         .sheet(isPresented: $logView, content: {
             LoginView()
+                .onDisappear {
+                    
+                    if vmLog.isLogede {
+                        vm.loadFavorites()
+                    }
+                }
         })
     }
-        
 }
 struct TransparentListStyle: ViewModifier {
     func body(content: Content) -> some View {
@@ -90,5 +96,6 @@ struct TransparentListStyle: ViewModifier {
 #Preview {
     FavoritesVeiw()
         .environment(MangasViewModel())
+        .environment(LogViewModel())
     
 }
