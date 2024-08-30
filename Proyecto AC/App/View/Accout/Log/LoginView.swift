@@ -44,7 +44,7 @@ struct LoginView: View {
                                 dismiss.callAsFunction()
                             }
                             error = ""
-                            viewModel.errorMensage = ""
+                           
                         }else {
                             error = "los campos estan vacions"
                         }

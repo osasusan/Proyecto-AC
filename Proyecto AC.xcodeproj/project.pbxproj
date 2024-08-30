@@ -90,6 +90,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		483AD8352C816E1A001D51B1 /* Collections */ = {
+			isa = PBXGroup;
+			children = (
+				48795BCB2C650CC600AC8EDD /* UserView.swift */,
+				48709FFF2C7DF1F40095DDCA /* NewCollectionView.swift */,
+				4870A0012C7F1F000095DDCA /* UserCollectionView.swift */,
+			);
+			path = Collections;
+			sourceTree = "<group>";
+		};
 		483B61BD2C0799F3002A5F70 = {
 			isa = PBXGroup;
 			children = (
@@ -223,10 +233,8 @@
 			isa = PBXGroup;
 			children = (
 				48709FFD2C7BEEDC0095DDCA /* AccountView.swift */,
-				4870A0012C7F1F000095DDCA /* UserCollectionView.swift */,
 				486C60602C61809500042D63 /* Log */,
-				48795BCB2C650CC600AC8EDD /* UserView.swift */,
-				48709FFF2C7DF1F40095DDCA /* NewCollectionView.swift */,
+				483AD8352C816E1A001D51B1 /* Collections */,
 			);
 			path = Accout;
 			sourceTree = "<group>";
@@ -530,8 +538,10 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "osasuSB.Proyecto-AC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -574,8 +584,10 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "osasuSB.Proyecto-AC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

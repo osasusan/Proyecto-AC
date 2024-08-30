@@ -40,8 +40,6 @@ struct RegiesterView: View {
                     .background(.gray)
                     .clipShape(RoundedRectangle(cornerRadius: 25.0))
                   
-                   
-                
                 Text(error)
                     .foregroundStyle(.red)
                
