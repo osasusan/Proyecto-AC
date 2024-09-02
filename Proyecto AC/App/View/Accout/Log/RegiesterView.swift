@@ -28,7 +28,7 @@ struct RegiesterView: View {
                     .background(.gray)
                     .clipShape(RoundedRectangle(cornerRadius: 25.0))
                    
-                SecureField("Pass", text: $modell.newPass2)
+                SecureField("Pass", text: $modell.newPass)
                     .multilineTextAlignment(.center)
                     .frame(width: 300,height: 50)
                     .background(.gray)
@@ -46,7 +46,7 @@ struct RegiesterView: View {
                 Button{
                     Task{
                         if !viewModel.newEmail.isEmpty && !viewModel.newPass.isEmpty && !pass2.isEmpty{
-                            if pass2 == viewModel.pass{
+                            if pass2 == viewModel.newPass{
                                 await viewModel.newUser(user:viewModel.newEmail,pass:viewModel.newPass)
                                 
                                 newAcaunt.toggle()

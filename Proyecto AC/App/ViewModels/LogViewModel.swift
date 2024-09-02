@@ -14,7 +14,7 @@ import Observation
     var newEmail : String = ""
     var pass : String = ""
     var newPass : String = ""
-    var newPass2 : String = ""
+   
     var token : String?
     var errorMensage :String?
     var isLogede = false
