@@ -11,6 +11,6 @@ You cannot read them, you can only see a description, the synopsis, author, and 
 ## Libraries
 - SwiftUI
 ## Minimum Deplyments
--ios 17 
+- ios 17.4
 ## Team members 
 - [Osasu Sánchez](https://github.com/osasusan)
