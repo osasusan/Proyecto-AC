@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import Observation
 
+@MainActor
 @Observable class LogViewModel{
     
     var email : String = "jcfmunoz@icloud.com"

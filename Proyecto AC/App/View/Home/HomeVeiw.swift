@@ -9,8 +9,8 @@ import SwiftUI
 @MainActor
 struct HomeVeiw: View {
 //    @EnvironmentObject var vm : MangasViewModel
-   @State var vm = MangasViewModel()
-//    @Environment(MangasViewModel.self) var vm
+   //@State var vm = MangasViewModel()
+    @Environment(MangasViewModel.self) var vm
     
     @State var page = 1
     @State private var showdestinationSearchView = false
@@ -36,8 +36,6 @@ struct HomeVeiw: View {
                         verMangas()
                         sectorView(titulo:"Shounen", destino: ViewMangas(conten: "Shounen", num: 5))
                         verDemos(content: "Shounen")
-                        
-//                                            vermagaID(id: "23")
                     }
                 }
             }

@@ -13,7 +13,7 @@ struct FavoritesVeiw: View {
     //    @State private var vm = MangasViewModel()
     @Environment(MangasViewModel.self) private var vm
     @Environment(LogViewModel.self) private var vmLog
-    @State var logView = false
+    
     
     var body: some View {
         
@@ -29,7 +29,6 @@ struct FavoritesVeiw: View {
                                     withAnimation() {
                                         MangaDetailVeiw(manga: fav)
                                     }
-                                    
                                 } label: {
                                     MangaListComponet(manga: fav)
                                         .swipeActions(edge: .leading){
@@ -46,8 +45,9 @@ struct FavoritesVeiw: View {
                             }
                         }
                     }
-                    .padding()
                     .transparentListStyle()
+                    .padding()
+                    
                 }else{
                     VStack(alignment : .center){
                         Text("Your favorites list is empty")
@@ -64,25 +64,18 @@ struct FavoritesVeiw: View {
                         .fontWidth(.compressed)
                     
                 }
-                .onAppear{
-                    logView = true
-                }
             }
         }
         .onAppear {
             if vmLog.isLogede {
-                vm.loadFavorites()
+                Task{
+                    await vm.loadFavorites()
+                }
             }
         }
-        .sheet(isPresented: $logView, content: {
-            LoginView()
-                .onDisappear {
-                    
-                    if vmLog.isLogede {
-                        vm.loadFavorites()
-                    }
-                }
-        })
+        
+        
+        
     }
 }
 struct TransparentListStyle: ViewModifier {

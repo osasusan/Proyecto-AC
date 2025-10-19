@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Observation
 
 
 @Observable class MangasViewModel{
@@ -13,7 +14,7 @@ import Foundation
     var favorites: [Manga] = []
     var allMangas: [Manga] = []
     var contenSh: [Manga] = []
-    var contenBg:[Manga] = []
+    var contenBg: [Manga] = []
     var mangasId: Manga!
     var themes : [String] = []
     var mangaListThemes : [Manga] = []
@@ -41,6 +42,7 @@ import Foundation
     //MARK: FUNCIONES QUE MANEGAN LAS RESPUESTAS DE LAS DIFERENTES SOLICITUDES A LA API
     
     // respuesta de listado de todos los mangas.
+    @MainActor
     func listMangas(page:Int , _ per: Int) async {
         do {
             let response = try await allamngaList(pages: page, per)
@@ -66,7 +68,7 @@ import Foundation
     }
     // lista de mangas de un genero escifico
     
-    func listMangaGen(page:Int,gen: String )async {
+    func listMangaGen(page:Int,gen: String) async {
         do {
             let response = try await mangaGen(page: page,gen: gen, per: 20)
             
@@ -79,7 +81,7 @@ import Foundation
         }
     }
     //Lista de mangase de un tematica específica
-    func listMangaThemes(page:Int,themes: String )async {
+    func listMangaThemes(page:Int,themes: String) async {
         do {
             let response = try await getMangaTheme(pages: page , theme: themes)
             
@@ -513,6 +515,7 @@ import Foundation
         }
         saveFavorites()
     }
+    
     func saveFavorites() {
         do {
             // Codifica el array de favoritos a JSON
@@ -526,19 +529,21 @@ import Foundation
             print("Error al guardar favoritos en UserDefaults: \(error)")
         }
     }
-
-    func loadFavorites() {
-        if let data = userDefaults.data(forKey: "favorites") {
-            do {
-                // Decodifica el JSON a tu array de favoritos
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                favorites = try decoder.decode([Manga].self, from: data)
-            } catch {
-                print("Error al cargar favoritos desde UserDefaults: \(error)")
+   
+    func loadFavorites() async {
+        await Task {@MainActor in
+            if let data = userDefaults.data(forKey: "favorites") {
+                do {
+                    // Decodifica el JSON a tu array de favoritos
+                    let decoder = JSONDecoder()
+                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+                    favorites = try decoder.decode([Manga].self, from: data)
+                } catch {
+                    print("Error al cargar favoritos desde UserDefaults: \(error)")
+                }
+            } else {
+                favorites = []
             }
-        } else {
-            favorites = []
-        }
+        }.value
     }
 }

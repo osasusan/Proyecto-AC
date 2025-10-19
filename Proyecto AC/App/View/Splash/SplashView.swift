@@ -49,7 +49,7 @@ struct SplashView: View {
                     Task{ await vm.getNewToken()
                         if vm.changetoken{
                             vmLog.isLogede = true
-                             vmManga.loadFavorites()
+                            await vmManga.loadFavorites()
                         }
                     }
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2) {

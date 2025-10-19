@@ -7,7 +7,7 @@
 
 import Foundation
 
-
+@MainActor
 @Observable class UserViewModel {
     var alet = ""
     var token  = NetworkHelper.shared.getToken()

@@ -11,7 +11,7 @@ struct UserCollectionView: View {
     @Environment(UserViewModel.self) var vm
     
     @State var recargar = false
-    @State var edidt = false
+    @State var edit = false
     var body: some View {
         @Bindable var vm2 = vm
         ZStack{
@@ -35,9 +35,9 @@ struct UserCollectionView: View {
                                             vm.readingVolume = fav.readingVolume
                                             vm.idManga = fav.manga.id
                                             vm.volumesOwned = fav.volumesOwned?.last?.description ?? "0"
-                                            edidt.toggle()
+                                            edit.toggle()
                                         } label: {
-                                            Label("Edidt",systemImage: "pencil" )
+                                            Label("Edit",systemImage: "pencil" )
                                         }
                                         .tint(.blue)
 
@@ -57,13 +57,14 @@ struct UserCollectionView: View {
                                     }
                                     
                             }
-                            .sheet(isPresented: $edidt){
+                            .sheet(isPresented: $edit){
                                 NewCollectionView()
                                     .onDisappear{
                                         vm.volumesOwned = ""
                                         vm.idManga = nil
                                         vm.readingVolume = nil
                                         vm.isComplet = false
+                                        
                                     }
                             }
                         }

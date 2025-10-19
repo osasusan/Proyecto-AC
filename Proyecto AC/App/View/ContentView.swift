@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+@MainActor
 struct ViewMangas : View{
     //   @State private var vm = MangasViewModel()
     @Environment(MangasViewModel.self) private var vm
@@ -32,16 +32,14 @@ struct ViewMangas : View{
                                     NavigationLink(destination:MangaDetailVeiw(manga: item)){
                                         MangaComponetDetalle(manga: item)
                                     }
-                                    
                                     .id("TOP")
                                 }
                             } else {
                                 HStack{
-                                    Text("Manga not faund  ")
+                                    Text("Manga not faund")
                                         .bold()
                                     ProgressView()
                                 }
-                                
                             }
                         }
                     }
@@ -192,6 +190,7 @@ struct MangarIdResulrCollection : View {
         
     }
 }
+
 struct ListaTemas:View {
     //    @EnvironmentObject private var vm : MangasViewModel
     //    @State private var vm = MangasViewModel()
@@ -229,7 +228,6 @@ struct ListaTemas:View {
                         numP = 5
                     default:
                         peti = []
-                        
                 }
             }
         }

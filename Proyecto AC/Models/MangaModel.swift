@@ -6,28 +6,28 @@
 //
 
 import Foundation
-import SwiftData
+
 
 struct MangasResponse: Codable {
     let metadata: Metadata?
     let items: [Manga]
 }
 
-struct Demographic :Codable,Equatable{
+struct Demographic :Codable{
     let demographic : String?
     let id : String?
 }
-struct Theme:Codable ,Equatable{
+struct Theme:Codable {
     let theme: String
     let id: String
 }
 
-struct Genre:Codable,Equatable{
+struct Genre:Codable{
     let id : String
     let genre : String
   
 }
-struct Author:Codable,Equatable{
+struct Author:Codable{
     let lastName: String
     let firstName: String
     let role: String
@@ -43,8 +43,7 @@ struct APIErrorResponse:Codable {
     let reason: String
     let error: Bool
 }
-struct Manga : Codable ,Equatable{
-
+struct Manga : Codable{
     
     let background: String?
     let title: String

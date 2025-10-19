@@ -16,7 +16,6 @@ struct TabBar: View {
     var body: some View {
      
         NavigationStack{
-            
             ZStack{
                 TabView(selection: $tab){
                     HomeVeiw()
@@ -26,18 +25,11 @@ struct TabBar: View {
                     FavoritesVeiw()
                         .tabItem {Label( "Favorites",systemImage: "star.fill")}
                         .tag(Tab.favorites)
-//                    Group{
-//                        if vm.isLogede {
-//                            UserView()
-//                        }else{
-//                            LoginView()
-//                        }
-//                    }
+                    
                     AccountView()
                         .tabItem {Label("Acaunt",systemImage: "person")}
-                    .   tag(Tab.acaut)
+                        .tag(Tab.acaut)
                 }
-                
             }
         }
     }

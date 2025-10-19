@@ -159,7 +159,7 @@ extension View{
         cleanedUrl = cleanedUrl.replacingOccurrences(of: "\"", with: "") // se remplazan las comillas por candeas vacias
         return cleanedUrl
     }
-    // voy a mentor esta dos finciones las ha hecho chatGPT
+    // no voy a mentir, esta dos finciones las ha hecho chatGPT
     func transparentListStyle() -> some View {
         self.modifier(TransparentListStyle())
     }

@@ -21,11 +21,11 @@ struct SearcheAndFilterBar: View {
                         .foregroundStyle(.gray)
                 }
                 Spacer()
-            
+                
                 Button {
                     
                 } label: {
-                    Image(systemName: "line.3.horizontal.decrease.circle")
+                    Image(systemName:"line.3.horizontal.decrease.circle")
                         .foregroundStyle(.black)
                 }
             }
@@ -41,8 +41,7 @@ struct SearcheAndFilterBar: View {
             .padding(.horizontal,16)
         }
         .background(Color.clear)
-            
-        }
+    }
 }
 #Preview {
     SearcheAndFilterBar()

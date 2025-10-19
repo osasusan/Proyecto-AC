@@ -37,18 +37,19 @@ struct LoginView: View {
                     .foregroundStyle(.red)
                 
                 Button{
-                    Task{
                         if !viewModel.email.isEmpty && !viewModel.pass.isEmpty{
-                            await viewModel.logUser(user:viewModel.email,pass:viewModel.pass)
-                            if viewModel.isLogede {
-                                dismiss.callAsFunction()
+                            Task{
+                                await viewModel.logUser(user:viewModel.email,pass:viewModel.pass)
                             }
-                            error = ""
-                           
+                                if viewModel.isLogede {
+                                    dismiss.callAsFunction()
+                                }
+                                error = ""
+                            
                         }else {
                             error = "los campos estan vacions"
                         }
-                    }
+                    
                 }label:{
                     Text("Log In")
                         .tint(.white)
